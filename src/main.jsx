@@ -1,10 +1,14 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+import Navigation from './components/Navigation.jsx'
+import Hero from './Hero.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <>
+      <Navigation />
+      <Hero />
+      <div className="carousel relative container mx-auto" style={{'maxWidth': '1600px'}}>
+
+      </div>
+    </>
 )
