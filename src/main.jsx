@@ -7,7 +7,7 @@ import Footer from './components/Footer.jsx'
 createRoot(document.getElementById('root')).render(
     <>
       <Navigation />
-      <div className="carousel relative container mx-auto" style={{'maxWidth': '1600px'}}>
+      <div className="carousel relative container mx-auto" style={{'maxWidth': '100%'}}>
         <Hero />
       
       </div>
