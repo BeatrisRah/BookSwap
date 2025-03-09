@@ -23,11 +23,11 @@ function Hero() {
 
       <div className="container py-8 px-6 mx-auto text-center">
 
-        <a className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl mb-8" href="#">
+        <a className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-2xl mb-8" href="#">
           About
         </a>
 
-        <p className="mx-auto w-2/4">
+        <p className="mx-auto w-2/4 p-5">
         BookSwap is a platform where users can trade, sell, or donate books with others in their community. 
         It allows users to list books, browse available books, interact with other users, and arrange book exchanges or purchases.
         </p>
