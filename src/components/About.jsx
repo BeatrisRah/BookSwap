@@ -1,4 +1,4 @@
-export default function Aboout() {
+export default function About() {
     return (
         <section className="text-gray-600 body-font bg-white mb-20 dark:bg-slate-900">
             <div className="container mx-auto flex md:px-24 md:py-10 md:flex-row flex-col items-center">
