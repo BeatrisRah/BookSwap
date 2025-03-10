@@ -14,7 +14,7 @@ function Hero() {
 						<h1 className="text-black font-medium text-4xl md:text-5xl leading-tight mb-2">BookSwap</h1>
 						<p className="font-regular text-gray-900 text-xl mb-8 mt-4">Sell, trade or donate your books!</p>
 						<div className="flex flex-col w-full sm:w-auto sm:flex-row ">
-							<Link href="/books"
+							<Link to="/books"
 								className="flex flex-row items-center justify-center w-full px-4 py-4 mb-4 text-sm font-bold bg-blue-300 leading-6 capitalize duration-100 transform rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:mb-0 sm:w-auto sm:mr-4 md:pl-8 md:pr-6 xl:pl-12 xl:pr-10   hover:shadow-lg hover:-translate-y-1">
 								Browse Books
 								<span className="ml-4">
