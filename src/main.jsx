@@ -5,6 +5,7 @@ import Hero from './components/hero/Hero.jsx'
 import Footer from './components/footer/Footer.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import About from './components/About.jsx'
+import Register from './components/register/Register.jsx'
 
 createRoot(document.getElementById('root')).render(
     <>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path='/' element={<Hero />} />
           <Route path='/about' element={<About />} />
+          <Route path='/register' element={<Register />} />
         </Routes>
       
       </div>
