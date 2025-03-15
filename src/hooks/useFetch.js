@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { db } from "../../firebaseinit";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 
-export default function useFetch(type ,defaultState = []){
+export default function useFetch(type ,defaultState = [], filter ={}){
     const [pending, setPending] = useState(true)
     const [state, setState] = useState(defaultState)
 
@@ -14,9 +14,15 @@ export default function useFetch(type ,defaultState = []){
         
         
         const getData = async () => {
-            // TODO: Change metjod on diffrent types
+            let querySnapShot = null;
 
-            const querySnapShot = await getDocs(collection(db, 'books'));
+            if(filter.latest){
+                const q = query(collection(db, 'books'), orderBy('createdAt', 'desc'), limit(3))
+                querySnapShot = await getDocs(q)
+            } else{
+                querySnapShot = await getDocs(collection(db, 'books'));
+
+            }
             setPending(false)
             return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
             
