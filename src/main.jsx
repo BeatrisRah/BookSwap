@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import About from './components/About.jsx'
 import Register from './components/register/Register.jsx'
 import Login from './components/login/Login.jsx'
+import CreateBookSection from './components/create/CreateBookSection.jsx'
 
 createRoot(document.getElementById('root')).render(
     <>
@@ -18,6 +19,8 @@ createRoot(document.getElementById('root')).render(
           <Route path='/about' element={<About />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          
+          <Route path='/books/create' element={<CreateBookSection />} />
         </Routes>
       
       </div>
