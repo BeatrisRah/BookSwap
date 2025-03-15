@@ -6,7 +6,7 @@ function Hero() {
 		<>
 			<div className="relative w-full h-[420px] mb-15" id="home">
 				<div className="absolute inset-0 opacity-70">
-					<img src="https://img.freepik.com/free-photo/beautiful-arrangement-different-books_23-2148883798.jpg?t=st=1741551044~exp=1741554644~hmac=73fd586cc0efbe160dd41b60b3f6215be2887ec235ccd6da3ae9f4131300511b&w=1380" alt="Background Image" className="object-cover object-center w-full h-full" />
+					<img src="/book_background.jpg" alt="Background Image" className="object-cover object-center w-full h-full" />
 
 				</div>
 				<div className="absolute inset-9 flex flex-col md:flex-row items-center justify-between">
