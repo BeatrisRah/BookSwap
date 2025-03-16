@@ -1,30 +1,14 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Navigation from './components/navigation/Navigation.jsx'
-import Hero from './components/hero/Hero.jsx'
-import Footer from './components/footer/Footer.jsx'
-import { BrowserRouter, Route, Routes } from 'react-router'
-import About from './components/About.jsx'
-import Register from './components/register/Register.jsx'
-import Login from './components/login/Login.jsx'
-import CreateBookSection from './components/create/CreateBookSection.jsx'
+
+import { BrowserRouter } from 'react-router'
+import App from './App'
+
 
 createRoot(document.getElementById('root')).render(
     <>
     <BrowserRouter>
-      <Navigation />
-      <div className="carousel relative container mx-auto" style={{'maxWidth': '100%'}}>
-        <Routes>
-          <Route path='/' element={<Hero />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          
-          <Route path='/books/create' element={<CreateBookSection />} />
-        </Routes>
-      
-      </div>
-      <Footer />
+      <App />
     </BrowserRouter>
       
     </>
