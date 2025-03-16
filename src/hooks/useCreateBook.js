@@ -9,7 +9,12 @@ export default function useCreateBook(){
     const [pending, setPending] = useState(false)
     const navigate = useNavigate()
 
-    const formSubmit = async (formData) => {
+    const formSubmit = async (e) => {
+        e.preventDefault()
+        setPending(true)
+
+
+        const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
         setNewBook(data)
 
@@ -20,6 +25,7 @@ export default function useCreateBook(){
             data.description === '' ||
             data.price === "") {
                 setError('Please fill all inputs')
+                setPending(false);
                 return;
             }
         
@@ -30,11 +36,13 @@ export default function useCreateBook(){
         
 
         try{
-            setPending(true)
+
             const res = await fetch('https://api.cloudinary.com/v1_1/dserynjly/image/upload', {
                 method:'POST',
                 body:newForm,
             })
+            if (!res.ok) throw new Error("Image upload failed");
+
             const imageData = await res.json()
             const imageUrl = imageData.secure_url;
             
@@ -58,9 +66,11 @@ export default function useCreateBook(){
         } catch(err){
             setError(err.message)
             return;
+        } finally{
+            setPending(false)
+
         }
 
-        setPending(false)
         setError(null)
         setNewBook({})
     }
