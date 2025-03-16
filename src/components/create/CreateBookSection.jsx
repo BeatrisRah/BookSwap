@@ -1,9 +1,32 @@
 export default function CreateBookSection() {
+    const formSubmit = async (formData) => {
+        const data = Object.fromEntries([...formData])
+        const newForm = new FormData()
+        newForm.append('file', data.file);
+        newForm.append('upload_preset', 'react_preset');
+        
+        
+
+        try{
+            const res = await fetch('https://api.cloudinary.com/v1_1/dserynjly/image/upload', {
+                method:'POST',
+                body:newForm
+            })
+            const imageData = await res.json()
+            console.log(imageData.secure_url);
+            
+            
+        } catch(err){
+            console.log(err);
+            
+        }
+
+    }
    return (
     <div class="h-full bg-gray-100 dark:bg-gray-900">
         <div class="mx-auto">
             <div class="flex justify-center px-6 py-12">
-                <form class="flex w-full justify-center px-6 py-12">
+                <form action={formSubmit} class="flex w-full justify-center px-6 py-12">
                     <div class="w-full xl:w-3/4 lg:w-11/12 flex">
                         <div class="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
                             >
@@ -112,7 +135,7 @@ export default function CreateBookSection() {
                                 <div class="mb-6 text-center">
                                     <button
                                         class="w-full px-4 py-2 font-bold text-white bg-blue-400 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline"
-                                        type="button"
+                                        type="submit"
                                     >
                                         Create
                                     </button>

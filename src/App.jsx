@@ -6,12 +6,11 @@ import Navigation from './components/navigation/Navigation.jsx'
 import Hero from './components/hero/Hero.jsx'
 import Footer from './components/footer/Footer.jsx'
 import { Route, Routes } from 'react-router'
-import { Cloudinary } from '@cloudinary/url-gen/index'
 
 
 
 export default function App() {
-
+    
     return (
         <>
         <Navigation />
