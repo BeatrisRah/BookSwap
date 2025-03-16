@@ -7,6 +7,7 @@ export default function CreateBookSection() {
     <div className="h-full bg-gray-100 dark:bg-gray-900">
         <div className="mx-auto">
             {error && <ErrorAlert error={error} />}
+            {pending && <div className="loader m-auto"></div>}
             <div className="flex justify-center px-6 py-12">
                 <form action={formSubmit} className="flex w-full justify-center px-6 py-12">
                     <div className="w-full xl:w-3/4 lg:w-11/12 flex">
@@ -41,7 +42,7 @@ export default function CreateBookSection() {
                                         type="text"
                                         placeholder="The Lord of The Rings"
                                         name="title"
-                                        value={newBook.title}
+                                        defaultValue={newBook.title}
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -54,7 +55,7 @@ export default function CreateBookSection() {
                                         type="text"
                                         placeholder="J.R.R Tolkien"
                                         name="author"
-                                        value={newBook.author}
+                                        defaultValue={newBook.author}
 
                                     />
                                 </div>
@@ -102,7 +103,7 @@ export default function CreateBookSection() {
                                         id="description"
                                         placeholder="Not my type of book..."
                                         name="description"
-                                        value={newBook.description}
+                                        defaultValue={newBook.description}
 
                                     />
                                 </div>
@@ -116,7 +117,7 @@ export default function CreateBookSection() {
                                         type="number"
                                         placeholder="10.99"
                                         name="price"
-                                        value={newBook.price}
+                                        defaultValue={newBook.price}
                                     />
                                 </div>
                                 
@@ -124,6 +125,7 @@ export default function CreateBookSection() {
                                     <button
                                         className="w-full px-4 py-2 font-bold text-white bg-blue-400 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline"
                                         type="submit"
+                                        disabled={pending}
                                     >
                                         Create
                                     </button>
