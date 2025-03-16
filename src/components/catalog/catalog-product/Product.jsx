@@ -4,7 +4,7 @@ export default function Product({book}) {
    return (
     <div className="p-6 max-w-sm border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center"
         href="#">
-        <img src="https://loremflickr.com/800/600/girl" className="h-3/4 shadow rounded-lg overflow-hidden border" />
+        <img src={book.imageUrl} className="h-3/4 shadow rounded-lg overflow-hidden border" />
         <div className="mt-8 flex flex-col justify-center items-center">
             <h4 className="font-bold text-xl text-center">{book.title}</h4>
             <p>{book.price}$</p>
