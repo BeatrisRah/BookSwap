@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
@@ -40,7 +40,7 @@ export default function useCreateBook(){
             
 
             // TODO: Add owner, available(?) 
-            await addDoc(collection(db, 'books'), 
+            const docRef = await addDoc(collection(db, 'books'), 
                         {
                             title:data.title,
                             author: data.author,
@@ -51,6 +51,9 @@ export default function useCreateBook(){
                             imageUrl,
                             createdAt: Date.now()
                         })
+            // adding the id to doc
+            await updateDoc(doc(db, 'books', docRef.id), {id:docRef.id})
+            
             navigate('/books')
         } catch(err){
             setError(err.message)
