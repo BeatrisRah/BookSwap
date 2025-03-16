@@ -1,8 +1,8 @@
 import useFetch from "../../hooks/useFetch";
 import Product from "./catalog-product/Product";
 
-export default function ProductList() {
-    const [pending, bookList] = useFetch('get')
+export default function ProductList({filter}) {
+    const [pending, bookList] = useFetch('get', [], filter)
 
     return (
         <section className="bg-white py-8 w-11/12 m-auto">
@@ -51,8 +51,8 @@ export default function ProductList() {
                 </nav>
 
                 <div className="w-full p-6 flex flex-row m-auto justify-center gap-4 flex-wrap lg:justify-start lg:flex-nowrap">
-                    {pending ? <div class="loader"></div> : 
-                    bookList.map(el => <Product book={el} />)}
+                    {pending ? <div className="loader"></div> : 
+                    bookList.map(el => <Product book={el} key={el.id} />)}
                     
                     
 

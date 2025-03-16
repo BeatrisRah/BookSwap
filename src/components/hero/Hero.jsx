@@ -35,7 +35,7 @@ function Hero() {
             </p>
 
 			
-			<ProductList />
+			<ProductList filter={{latest:true}} />
 			
 		</>
 	);
