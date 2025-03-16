@@ -17,7 +17,7 @@ export default function useFetch(type ,defaultState = [], filter ={}){
             let querySnapShot = null;
 
             if(filter.latest){
-                const q = query(collection(db, 'books'), orderBy('createdAt', 'desc'), limit(3))
+                const q = query(collection(db, 'books'), orderBy('createdAt', 'desc'), limit(4))
                 querySnapShot = await getDocs(q)
             } else{
                 querySnapShot = await getDocs(collection(db, 'books'));
