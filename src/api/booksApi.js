@@ -1,9 +1,10 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { useState } from "react";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
 
-export default function useCreateBook(){
+export function useCreateBook(){
     const [error, setError] = useState(null)
     const [newBook, setNewBook] = useState({})
     const [pending, setPending] = useState(false)
@@ -77,4 +78,45 @@ export default function useCreateBook(){
 
 
     return [formSubmit, newBook, pending , error]
+}
+
+
+
+export function useFetch( defaultState = [], filter ={}){
+    const [pending, setPending] = useState(true)
+    const [state, setState] = useState(defaultState)
+
+    // ** TYPE: ONE DOCUMENT OR ALL
+
+    useEffect(() => {
+        setPending(true)
+        
+        
+        const getData = async () => {
+            let q = collection(db, 'books')
+
+            if(filter?.latest){
+                q = query(q, orderBy('createdAt', 'desc'), limit(4))
+                
+            }else if (filter?.sortBy === "newest") {
+                q = query(q, orderBy("createdAt", "desc"));
+
+            } else if (filter?.sortBy === "price-high") {
+                q = query(q, orderBy("price", "desc"));
+
+            } else if (filter?.sortBy === "price-low") {
+                q = query(q, orderBy("price", "asc"));
+            }
+
+            const querySnapShot = await getDocs(q);
+            setPending(false)
+            return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
+            
+        }
+        getData().then(res => setState(res))
+        
+
+    }, [filter])
+
+    return [pending, state]
 }

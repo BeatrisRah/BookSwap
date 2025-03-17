@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch";
 import Product from "./catalog-product/Product";
 import { useSearchParams } from "react-router";
+import { useFetch } from "../../api/booksApi";
 
 export default function ProductList({filter = {}}) {
     const [defaultFilter, setFaultFilter] = useState(filter)
-    const [pending, bookList] = useFetch('get', [], defaultFilter)
+    const [pending, bookList] = useFetch([], defaultFilter)
 
     const [isOpen, setIsOpen ] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
