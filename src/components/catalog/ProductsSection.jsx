@@ -1,13 +1,17 @@
+import { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Product from "./catalog-product/Product";
 
 export default function ProductList({filter}) {
     const [pending, bookList] = useFetch('get', [], filter)
+    const [isOpen, setIsOpen ] = useState(false)
 
-    const filters =[
-        {name:'All', path:'/books'},
-        {name:'Newest', path:'/books?'}
-    ]
+    const filters = ["All", "Newest", "Price: High to Low", "Price: Low to High"]
+
+    const handleFilterChange = (filter) => {
+        // setSearchParams({ filter: filter.toLowerCase().replace(/\s+/g, "-") });
+        setIsOpen(false);
+    };
 
     return (
         <section className="bg-white py-8 w-11/12 m-auto">
@@ -23,20 +27,34 @@ export default function ProductList({filter}) {
                         
 
                         <div className="flex items-center" id="store-nav-content">
-                            <a
-                                className="pl-3 inline-block no-underline hover:text-black"
-                                href="#"
-                            >
-                                <svg
-                                    className="fill-current hover:text-black"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
+                            <div className="relative">
+                                <button 
+                                    className="pl-3 inline-block no-underline hover:text-black"
+                                    onClick={() => setIsOpen(!isOpen)}
                                 >
-                                    <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
-                                </svg>
-                            </a>
+                                    <svg
+                                        className="fill-current hover:text-black"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
+                                    </svg>
+                                </button>
+                                {isOpen && 
+                                    (<div className="absolute mt-2 w-48 bg-white border rounded-md shadow-lg" >
+                                        {filters.map(f => (
+                                            <button 
+                                            key={f} 
+                                            className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                                            onClick={() => handleFilterChange(f)}
+                                            >
+                                            {f}
+                                            </button>
+                                        ))}
+                                    </div>)}
+                            </div>
 
                             <a
                                 className="pl-3 inline-block no-underline hover:text-black"
