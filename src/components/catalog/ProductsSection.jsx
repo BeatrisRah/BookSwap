@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Product from "./catalog-product/Product";
+import { useSearchParams } from "react-router";
 
-export default function ProductList({filter}) {
-    const [pending, bookList] = useFetch('get', [], filter)
+export default function ProductList({filter = {}}) {
+    const [defaultFilter, setFaultFilter] = useState(filter)
+    const [pending, bookList] = useFetch('get', [], defaultFilter)
+
     const [isOpen, setIsOpen ] = useState(false)
+    const [searchParams, setSearchParams] = useSearchParams()
+    
 
-    const filters = ["All", "Newest", "Price: High to Low", "Price: Low to High"]
+
+    const filters = [
+        { name: "All", value: "all" },
+        { name: "Newest", value: "newest" },
+        { name: "Price: High to Low", value: "price-high" },
+        { name: "Price: Low to High", value: "price-low" },
+    ];
 
     const handleFilterChange = (filter) => {
-        // setSearchParams({ filter: filter.toLowerCase().replace(/\s+/g, "-") });
+        setSearchParams({ sortBy: filter });
         setIsOpen(false);
     };
+
+    useEffect(() => {
+        const filters = searchParams.get('sortBy')
+        setFaultFilter(f => ({...f, sortBy:filters}))
+        
+    }, [searchParams])
 
     return (
         <section className="bg-white py-8 w-11/12 m-auto">
@@ -22,7 +39,7 @@ export default function ProductList({filter}) {
                             className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
                         >
                             
-                            {filter ? 'Recently Added': 'BookList'}
+                            {filter.latest ? 'Recently Added': 'BookList'}
                         </div>
                         
 
@@ -46,11 +63,11 @@ export default function ProductList({filter}) {
                                     (<div className="absolute mt-2 w-48 bg-white border rounded-md shadow-lg" >
                                         {filters.map(f => (
                                             <button 
-                                            key={f} 
+                                            key={f.value} 
                                             className="block w-full text-left px-4 py-2 hover:bg-gray-200"
-                                            onClick={() => handleFilterChange(f)}
+                                            onClick={() => handleFilterChange(f.value)}
                                             >
-                                            {f}
+                                            {f.name}
                                             </button>
                                         ))}
                                     </div>)}
