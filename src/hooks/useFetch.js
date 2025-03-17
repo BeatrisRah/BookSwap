@@ -14,15 +14,22 @@ export default function useFetch(type ,defaultState = [], filter ={}){
         
         
         const getData = async () => {
-            let querySnapShot = null;
+            let q = collection(db, 'books')
 
-            if(filter.latest){
-                const q = query(collection(db, 'books'), orderBy('createdAt', 'desc'), limit(4))
-                querySnapShot = await getDocs(q)
-            } else{
-                querySnapShot = await getDocs(collection(db, 'books'));
+            if(filter?.latest){
+                q = query(q, orderBy('createdAt', 'desc'), limit(4))
+                
+            }else if (filter?.sortBy === "newest") {
+                q = query(q, orderBy("createdAt", "desc"));
 
+            } else if (filter?.sortBy === "price-high") {
+                q = query(q, orderBy("price", "desc"));
+
+            } else if (filter?.sortBy === "price-low") {
+                q = query(q, orderBy("price", "asc"));
             }
+
+            const querySnapShot = await getDocs(q);
             setPending(false)
             return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
             
@@ -30,7 +37,7 @@ export default function useFetch(type ,defaultState = [], filter ={}){
         getData().then(res => setState(res))
         
 
-    }, [type])
+    }, [type, filter])
 
     return [pending, state]
 }

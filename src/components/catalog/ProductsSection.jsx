@@ -4,17 +4,23 @@ import Product from "./catalog-product/Product";
 export default function ProductList({filter}) {
     const [pending, bookList] = useFetch('get', [], filter)
 
+    const filters =[
+        {name:'All', path:'/books'},
+        {name:'Newest', path:'/books?'}
+    ]
+
     return (
         <section className="bg-white py-8 w-11/12 m-auto">
             <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
                 <nav id="store" className="w-full z-30 top-0 px-6 py-1">
                     <div className="w-full container mx-auto flex flex-wrap items-center md:justify-center lg:justify-between mt-0 px-2 py-3 ">
-                        <a
+                        <div
                             className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
-                            href="#"
                         >
-                            Recently Added
-                        </a>
+                            
+                            {filter ? 'Recently Added': 'BookList'}
+                        </div>
+                        
 
                         <div className="flex items-center" id="store-nav-content">
                             <a

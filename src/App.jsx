@@ -6,6 +6,7 @@ import Navigation from './components/navigation/Navigation.jsx'
 import Hero from './components/hero/Hero.jsx'
 import Footer from './components/footer/Footer.jsx'
 import { Route, Routes } from 'react-router'
+import BookCatalog from './components/catalog/BookCatalog.jsx'
 
 
 
@@ -21,6 +22,7 @@ export default function App() {
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
 
+                <Route path='/books' element={<BookCatalog />} />
                 <Route path='/books/create' element={<CreateBookSection />} />
             </Routes>
 
