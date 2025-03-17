@@ -11,6 +11,7 @@ import ProductList from './components/catalog/ProductsSection.jsx'
 
 
 export default function App() {
+    // const {user, sighUser, logUser, logoutUser} = useUser()
     
     return (
         <>
