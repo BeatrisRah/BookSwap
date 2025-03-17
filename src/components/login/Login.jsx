@@ -1,9 +1,34 @@
-import { Link } from "react-router"
+import { useActionState, useState } from "react";
+import { Link, useNavigate } from "react-router"
+import ErrorAlert from "../alerts/Error";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Login() {
-   return (
+    const [error,seterror] = useState(null)
+    const {login} = useAuth()
+    const navigate = useNavigate()
+
+    const handleLogin = async (previusState, formData) => {
+        const userData = Object.fromEntries(formData.entries())
+        try{
+            seterror(null)
+            if(userData.email === '' || userData.password === '') throw new Error('Please fill all inputs!')
+            await login(userData.email, userData.password) 
+            navigate('/books')
+        } catch(err){
+            seterror(err.message)
+        }
+
+        return userData;
+    }
+
+    const [state, formAction, isPending] = useActionState(handleLogin, {email:'', password:''})
+    // console.log(state);
+    
+
+    return (
     <div className="min-h-screen bg-gray-50 flex flex-col py-10 sm:px-6 lg:px-8">
-    {/* ERROR HERE */}
+        {error && <ErrorAlert error={error} />}
     <div className="sm:mx-auto sm:w-full sm:max-w-md">
         
         <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
@@ -20,7 +45,7 @@ export default function Login() {
     </div>
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form method="POST" action="#">
+            <form action={formAction}>
                 
                 
                 <div className="mt-6">
@@ -76,6 +101,7 @@ export default function Login() {
                     <span className="block w-full rounded-md shadow-sm">
                         <button
                             type="submit"
+                            disabled={isPending}
                             className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-400 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                         >
                             Login
