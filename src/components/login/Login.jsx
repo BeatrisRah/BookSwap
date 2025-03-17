@@ -11,7 +11,7 @@ export default function Login() {
         </h2>
         <p className="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
             <Link
-                href="/login"
+                to="/register"
                 className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
             >
                 Or register a new account
