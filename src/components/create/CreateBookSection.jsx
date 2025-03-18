@@ -1,9 +1,22 @@
+import { useState } from "react";
 import { useCreateBook } from "../../api/booksApi";
 import ErrorAlert from "../alerts/Error";
 
 
 export default function CreateBookSection() {
     const [formSubmit, newBook, pending , error] = useCreateBook()
+    const [imagePreview, setImagePreview ] = useState(null)
+
+    const handleImageChange = (e) => {
+        const file = e.currentTarget.files[0]
+        if(file){
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                setImagePreview(reader.result)
+            }
+            reader.readAsDataURL(file)
+        }
+    }
 
 
     return (
@@ -16,21 +29,39 @@ export default function CreateBookSection() {
                     <div className="w-full xl:w-3/4 lg:w-11/12 flex">
                         <div className="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
                             >
-                                <input type="file" name="file" id="file" className="sr-only" accept="image/png, image/jpeg" />
+                                <input 
+                                type="file" 
+                                name="file" id="file" 
+                                className="sr-only" 
+                                accept="image/png, image/jpeg"
+                                defaultValue={newBook.file}
+                                onChange={handleImageChange}
+                                />
                                 <label htmlFor="file"
                                     className="relative flex h-full items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                    <div>
-                                        <span className="mb-2 block text-xl font-semibold text-black">
-                                            Drop image here
+                                    {imagePreview ? (
+                                        <div>
+                                        <img src={imagePreview} alt="image uploaded"></img>
+                                        <span className="mt-2 block text-xl text-black">
+                                            Click to change image
                                         </span>
-                                        <span className="mb-2 block text-base font-medium text-[#6B7280]">
-                                            Or
-                                        </span>
-                                        <span
-                                            className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-black hover:bg-gray-500  hover:text-white">
-                                            Browse
-                                        </span>
-                                    </div>
+                                        </div>
+                                    ): (
+                                        <div>
+                                            <span className="mb-2 block text-xl font-semibold text-black">
+                                                Drop image here
+                                            </span>
+                                            <span className="mb-2 block text-base font-medium text-[#6B7280]">
+                                                Or
+                                            </span>
+                                            <span
+                                                className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-black hover:bg-gray-500  hover:text-white">
+                                                Browse
+                                            </span>
+                                            
+                                        </div>
+                                    )}
+                                    
                                 </label>
                             </div>
                         <div className="w-full lg:w-7/12 bg-white dark:bg-gray-700 p-5  lg:rounded-l-none">
