@@ -3,9 +3,11 @@ import { useCreateBook } from "../../api/booksApi";
 import ErrorAlert from "../alerts/Error";
 
 
-export default function CreateBookSection() {
-    const [formSubmit, newBook, pending , error] = useCreateBook()
+export default function CreateSection() {
+
+    const [createFormSubmit, newBook, pending , error] = useCreateBook()
     const [imagePreview, setImagePreview ] = useState(null)
+    
 
     const handleImageChange = (e) => {
         const file = e.currentTarget.files[0]
@@ -25,7 +27,7 @@ export default function CreateBookSection() {
             {error && <ErrorAlert error={error} />}
             {pending && <div className="loader m-auto"></div>}
             <div className="flex justify-center px-6 py-12">
-                <form onSubmit={formSubmit} className="flex w-full justify-center px-6 py-12">
+                <form onSubmit={createFormSubmit} className="flex w-full justify-center px-6 py-12">
                     <div className="w-full xl:w-3/4 lg:w-11/12 flex">
                         <div className="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
                             >
@@ -101,6 +103,7 @@ export default function CreateBookSection() {
                                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="genre"
                                         name="genre"
+                                        defaultValue={newBook.genre}
                                     > 
                                     <option value="fantasy">Fantasy</option>
                                     <option value="romance novel">Romance novel</option>
@@ -122,6 +125,7 @@ export default function CreateBookSection() {
                                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="condition"
                                         name="condition"
+                                        defaultValue={newBook.condition}
                                     > 
                                     <option value="new">New</option>
                                     <option value="good">Good</option>

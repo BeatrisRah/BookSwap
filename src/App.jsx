@@ -1,7 +1,6 @@
 import About from './components/About.jsx'
 import Register from './components/auth/Register.jsx'
 import Login from './components/auth/Login.jsx'
-import CreateBookSection from './components/create/CreateBookSection.jsx'
 import Navigation from './components/navigation/Navigation.jsx'
 import Hero from './components/hero/Hero.jsx'
 import Footer from './components/footer/Footer.jsx'
@@ -9,8 +8,8 @@ import { Route, Routes } from 'react-router'
 import ProductList from './components/catalog/ProductsSection.jsx'
 import Logout from './components/auth/Logout.jsx'
 import ProductDetails from './components/details/ProductDetails.jsx'
-
-
+import EditProduct from './components/create-or-update/Edit.jsx'
+import CreateSection from './components/create-or-update/CreateSection.jsx'
 
 export default function App() {    
     return (
@@ -25,8 +24,9 @@ export default function App() {
                 <Route path='/logout' element={<Logout />} />
 
                 <Route path='/books' element={<ProductList filter={{}} />} />
-                <Route path='/books/create' element={<CreateBookSection />} />
+                <Route path='/books/create' element={<CreateSection />} />
                 <Route path='/books/:bookId/details' element={<ProductDetails />} />
+                <Route path='/books/:bookId/edit' element={<EditProduct />} />
             </Routes>
 
         </div>

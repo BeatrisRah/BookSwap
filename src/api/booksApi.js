@@ -85,6 +85,12 @@ export function useCreateBook(){
     return [formSubmit, newBook, pending , error]
 }
 
+export function useBookForm(bookId = null){
+
+
+    return [pending, error]
+}
+
 export function useFetch( defaultState = [], filter ={}){
     const [pending, setPending] = useState(true)
     const [state, setState] = useState(defaultState)
@@ -136,7 +142,7 @@ export function useFetchOne(bookId){
                 const bookRef = doc(db, 'books', bookId);
                 const bookSnap = await getDoc(bookRef)
 
-                if (!bookSnap.exists()) throw new Error('Book doesnt exist')
+                if (!bookSnap.exists()) throw new Error('Book doesnt exist!');
 
                 setBook(bookSnap.data())
             } catch(err){
@@ -145,9 +151,34 @@ export function useFetchOne(bookId){
                 setPending(false)
             }
         }
+        if(!bookId) {
+            return;
+        };
 
         getBook()
+
     }, [bookId])
 
     return [book, pending, error]
+}
+
+export function useEdit(bookId){
+    const [imageChanged, setImageChanged] = useState(null)
+
+    const changeImageUrl = (file) =>{
+        setImageChanged(file)
+    }
+
+
+    const formSubmit = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const data = Object.fromEntries([...formData])
+        
+        if (imageChanged){
+            
+        }
+    }
+
+    return [formSubmit, changeImageUrl]
 }
