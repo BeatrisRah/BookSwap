@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function About() {
     return (
         <section className="text-gray-600 body-font bg-white mb-20 dark:bg-slate-900">
@@ -21,12 +23,12 @@ export default function About() {
                         exchanges or purchases.
                     </p>
                     <div className="flex justify-center">
-                        <a
-                            href="#"
+                        <Link
+                            to="/register"
                             className="inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
                         >
                             Sign up
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
