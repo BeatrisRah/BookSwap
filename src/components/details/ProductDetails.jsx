@@ -1,17 +1,27 @@
 import { useParams } from "react-router"
+import { useFetchOne } from "../../api/booksApi"
+import NotFound from "../not-found/NotFound"
 
 export default function ProductDetails() {
     const {bookId} = useParams()
-    console.log(bookId);
-    
+    const [book, pending, error] = useFetchOne(bookId)
+
+
+    if (error){
+        return (
+        <>
+            <NotFound />
+        </>)
+    }
     
     return (
     <div className="bg-gray-100 dark:bg-gray-800 py-8">
+        {pending && <div className="loader m-auto"></div>}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row -mx-4">
                 <div className="md:flex-1 px-4">
-                    <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                        <img className="w-full h-full object-cover" src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg" alt="Product Image" />
+                    <div className="h-[700px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
+                        <img className="w-full h-full object-fit" src={book.imageUrl} alt="Product Image" />
                     </div>
                     <div className="flex -mx-2 mb-4">
                         <div className="w-1/2 px-2">
@@ -23,7 +33,7 @@ export default function ProductDetails() {
                     </div>
                 </div>
                 <div className="md:flex-1 px-4">
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Product Name</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{book.title}</h2>
                     <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
                         ante justo. Integer euismod libero id mauris malesuada tincidunt.
@@ -31,22 +41,14 @@ export default function ProductDetails() {
                     <div className="flex mb-4">
                         <div className="mr-4">
                             <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                            <span className="text-gray-600 dark:text-gray-300">$29.99</span>
+                            <span className="text-gray-600 dark:text-gray-300"> {book.price}$</span>
                         </div>
                         <div>
-                            <span className="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
-                            <span className="text-gray-600 dark:text-gray-300">In Stock</span>
+                            <span className="font-bold text-gray-700 dark:text-gray-300">Condition:</span>
+                            <span className="text-gray-600 dark:text-gray-300"> {book.condition}</span>
                         </div>
                     </div>
-                    <div className="mb-4">
-                        <span className="font-bold text-gray-700 dark:text-gray-300">Select Color:</span>
-                        <div className="flex items-center mt-2">
-                            <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2"></button>
-                            <button className="w-6 h-6 rounded-full bg-red-500 dark:bg-red-700 mr-2"></button>
-                            <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2"></button>
-                            <button className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2"></button>
-                        </div>
-                    </div>
+                    
                     <div className="mb-4">
                         <span className="font-bold text-gray-700 dark:text-gray-300">Select Size:</span>
                         <div className="flex items-center mt-2">

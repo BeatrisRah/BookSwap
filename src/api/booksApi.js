@@ -1,4 +1,4 @@
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 import { db } from "../../firebaseinit";
@@ -84,8 +84,6 @@ export function useCreateBook(){
     return [formSubmit, newBook, pending , error]
 }
 
-
-
 export function useFetch( defaultState = [], filter ={}){
     const [pending, setPending] = useState(true)
     const [state, setState] = useState(defaultState)
@@ -123,4 +121,32 @@ export function useFetch( defaultState = [], filter ={}){
     }, [filter])
 
     return [pending, state]
+}
+
+export function useFetchOne(bookId){
+    const [book, setBook] = useState({})
+    const [pending, setPending] = useState(true)
+    const [error, setError] = useState(null)
+
+
+    useEffect(() => {
+        const getBook = async() => {
+            try{
+                const bookRef = doc(db, 'books', bookId);
+                const bookSnap = await getDoc(bookRef)
+
+                if (!bookSnap.exists()) throw new Error('Book doesnt exist')
+
+                setBook(bookSnap.data())
+            } catch(err){
+                setError(err.message)
+            } finally{
+                setPending(false)
+            }
+        }
+
+        getBook()
+    }, [bookId])
+
+    return [book, pending, error]
 }
