@@ -62,7 +62,8 @@ export function useCreateBook(){
                             price: Number(data.price),
                             imageUrl,
                             createdAt: Date.now(),
-                            owner: user.uid
+                            owner: user.uid,
+                            ownerEmail:user.email
                         })
             // adding the id to doc
             await updateDoc(doc(db, 'books', docRef.id), {id:docRef.id})
