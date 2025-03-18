@@ -1,6 +1,14 @@
 import ErrorAlert from "../alerts/Error";
 
-export default function BookForm({data:{error, pending, submitHandler, handleImageChange, book, bookId, imagePreview}}) {
+export default function BookForm({
+    data:{
+        error, 
+        pending, 
+        submitHandler, 
+        handleImageChange,
+        book, 
+        bookId, 
+        imagePreview}}) {
     return (
         <div className="h-full bg-gray-100 dark:bg-gray-900">
             <div className="mx-auto">

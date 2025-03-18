@@ -5,11 +5,19 @@ import BookForm from "./BookForm";
 export default function EditProduct() {
     const {bookId} = useParams()
     const [book, pending, error] = useFetchOne(bookId)
-    const [fomrSumbit, handleImageChange] = useEdit('')
+    const [fomrSumbit, handleImageChange, imagePreview] = useEdit(book.imageUrl, bookId)
+
 
     //error, pending, submitHandler, handleImageChange, book, bookId}
 
     return (
-        <BookForm data={{error, pending, book, submitHandler:fomrSumbit, handleImageChange, bookId, imagePreview:null}} />
+        <BookForm data={{
+            error, 
+            pending, 
+            book, 
+            submitHandler:fomrSumbit, 
+            handleImageChange, 
+            bookId, 
+            imagePreview}} />
     );
 }

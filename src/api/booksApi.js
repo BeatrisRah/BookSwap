@@ -85,12 +85,6 @@ export function useCreateBook(){
     return [formSubmit, newBook, pending , error]
 }
 
-export function useBookForm(bookId = null){
-
-
-    return [pending, error]
-}
-
 export function useFetch( defaultState = [], filter ={}){
     const [pending, setPending] = useState(true)
     const [state, setState] = useState(defaultState)
@@ -162,23 +156,60 @@ export function useFetchOne(bookId){
     return [book, pending, error]
 }
 
-export function useEdit(bookId){
-    const [imageChanged, setImageChanged] = useState(null)
+export function useEdit(currentImage, bookId){
+    const [imageObject, setImageObject] = useState({}); 
+    const navigate = useNavigate()
 
-    const changeImageUrl = (file) =>{
-        setImageChanged(file)
-    }
+    useEffect(() => {
+        if (!currentImage) return;
+        setImageObject({imagePreview: currentImage, image:currentImage})
+    }, [currentImage]); 
+
+    const changeImageUrl = (e) => {
+        const file = e.currentTarget.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImageObject({imagePreview: reader.result, image:file})
+        };
+        reader.readAsDataURL(file);
+    };
 
 
     const formSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
-        
-        if (imageChanged){
+
+        delete data.file; //Delete image file
+        try{
+            if (imageObject.image !== currentImage){
+                const newForm = new FormData()
+                newForm.append('file', imageObject.image);
+                newForm.append('upload_preset', 'react_preset');
+                
+                const res = await fetch('https://api.cloudinary.com/v1_1/dserynjly/image/upload', {
+                    method:'POST',
+                    body:newForm,
+                })
+                if (!res.ok) throw new Error("Image upload failed");
+    
+                const imageData = await res.json()
+                const imageUrl = imageData.secure_url;
+                data.imageUrl = imageUrl;
+            }
+
+            const bookRef = doc(db, 'books', bookId)
+            await updateDoc(bookRef, data)
+            navigate(`/books/${bookId}/details`)
+        } catch(err){
+            console.log(err.message);
             
+
         }
+
     }
 
-    return [formSubmit, changeImageUrl]
+    return [formSubmit, changeImageUrl, imageObject.imagePreview]
 }
