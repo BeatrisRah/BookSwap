@@ -8,6 +8,7 @@ import Footer from './components/footer/Footer.jsx'
 import { Route, Routes } from 'react-router'
 import ProductList from './components/catalog/ProductsSection.jsx'
 import Logout from './components/auth/Logout.jsx'
+import ProductDetails from './components/details/ProductDetails.jsx'
 
 
 
@@ -25,6 +26,7 @@ export default function App() {
 
                 <Route path='/books' element={<ProductList filter={{}} />} />
                 <Route path='/books/create' element={<CreateBookSection />} />
+                <Route path='/books/:bookId/details' element={<ProductDetails />} />
             </Routes>
 
         </div>
