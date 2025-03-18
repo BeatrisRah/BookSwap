@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 export function useCreateBook(){
     const [error, setError] = useState(null)
     const [newBook, setNewBook] = useState({})
     const [pending, setPending] = useState(false)
+    // ! GUEST CANT MAKE REQUESTS
+    const {user} = useAuth()
     const navigate = useNavigate()
 
     const formSubmit = async (e) => {
@@ -58,7 +61,8 @@ export function useCreateBook(){
                             description: data.description,
                             price: Number(data.price),
                             imageUrl,
-                            createdAt: Date.now()
+                            createdAt: Date.now(),
+                            owner: user.uid
                         })
             // adding the id to doc
             await updateDoc(doc(db, 'books', docRef.id), {id:docRef.id})

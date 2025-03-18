@@ -27,6 +27,7 @@ export const AuthProvider = ({children}) => {
     const logout = () => {
         return signOut(auth)
     }
+    
 
     return(
         <AuthContext.Provider value={{user, pending, sighUp, login, logout}}>
