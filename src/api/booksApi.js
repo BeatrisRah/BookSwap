@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { checkData, createImageUrl } from "../utils/createUpdateUtils";
 
 export function useCreateBook(){
     const [error, setError] = useState(null)
@@ -17,41 +18,14 @@ export function useCreateBook(){
         e.preventDefault()
         setPending(true)
 
-
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
         setNewBook(data)
-
-        if(data.title === '' || 
-            data.author === '' ||
-            data.genre === '' ||
-            data.condition === '' ||
-            data.description === '' ||
-            data.price === "") {
-                setError('Please fill all inputs')
-                setPending(false);
-                return;
-            }
         
-        const newForm = new FormData()
-        newForm.append('file', data.file);
-        newForm.append('upload_preset', 'react_preset');
-        
-        
-
         try{
+            checkData(data)
 
-            const res = await fetch('https://api.cloudinary.com/v1_1/dserynjly/image/upload', {
-                method:'POST',
-                body:newForm,
-            })
-            if (!res.ok) throw new Error("Image upload failed");
-
-            const imageData = await res.json()
-            const imageUrl = imageData.secure_url;
-            
-
-            // TODO: Add owner, available(?) 
+            const imageUrl = await createImageUrl(data.file)
             const docRef = await addDoc(collection(db, 'books'), 
                         {
                             title:data.title,
@@ -74,9 +48,7 @@ export function useCreateBook(){
             return;
         } finally{
             setPending(false)
-
         }
-
         setError(null)
         setNewBook({})
     }
@@ -162,7 +134,7 @@ export function useEdit(currentImage, bookId){
 
     useEffect(() => {
         if (!currentImage) return;
-        setImageObject({imagePreview: currentImage, image:currentImage})
+        setImageObject({imagePreview: currentImage, imageFile:currentImage})
     }, [currentImage]); 
 
     const changeImageUrl = (e) => {
@@ -171,7 +143,7 @@ export function useEdit(currentImage, bookId){
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setImageObject({imagePreview: reader.result, image:file})
+            setImageObject({imagePreview: reader.result, imageFile:file})
         };
         reader.readAsDataURL(file);
     };
@@ -184,19 +156,9 @@ export function useEdit(currentImage, bookId){
 
         delete data.file; //Delete image file
         try{
-            if (imageObject.image !== currentImage){
-                const newForm = new FormData()
-                newForm.append('file', imageObject.image);
-                newForm.append('upload_preset', 'react_preset');
-                
-                const res = await fetch('https://api.cloudinary.com/v1_1/dserynjly/image/upload', {
-                    method:'POST',
-                    body:newForm,
-                })
-                if (!res.ok) throw new Error("Image upload failed");
-    
-                const imageData = await res.json()
-                const imageUrl = imageData.secure_url;
+            checkData(data)
+            if (imageObject.imageFile !== currentImage){
+                const imageUrl = await createImageUrl(imageObject.imageFile)
                 data.imageUrl = imageUrl;
             }
 
