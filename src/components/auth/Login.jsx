@@ -1,27 +1,11 @@
 import { useActionState, useState } from "react";
-import { Link, useNavigate } from "react-router"
+import { Link, } from "react-router"
 import ErrorAlert from "../alerts/Error";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuthForm } from "../../api/authApi";
 
 export default function Login() {
     const [error,seterror] = useState(null)
-    const {login} = useAuth()
-    const navigate = useNavigate()
-
-    const handleLogin = async (previusState, formData) => {
-        const userData = Object.fromEntries(formData.entries())
-        try{
-            seterror(null)
-            if(userData.email === '' || userData.password === '') throw new Error('Please fill all inputs!')
-            await login(userData.email, userData.password) 
-            navigate('/books')
-        } catch(err){
-            seterror(err.message)
-        }
-
-        return userData;
-    }
-
+    const handleLogin = useAuthForm(seterror)
     const [state, formAction, isPending] = useActionState(handleLogin, {email:'', password:''})
     // console.log(state);
     
