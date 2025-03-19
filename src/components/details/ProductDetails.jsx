@@ -83,7 +83,7 @@ export default function ProductDetails() {
                     <div className="flex -mx-2 mb-4 mt-6">
                         <div className="w-1/2 px-2">
                             <Link 
-                            className="w-full bg-blue-400 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-blue-500 dark:hover:bg-gray-600"
+                            className="w-full bg-blue-400 dark:bg-gray-700 text-gray-900 dark:text-white py-2 px-4 rounded-full hover:bg-blue-500 dark:hover:bg-gray-600"
                             to={'/login'}
                                 >Sigh In To Buy!
                             </Link>

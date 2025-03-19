@@ -10,7 +10,7 @@ export default function Product({ book }) {
             <div className="mt-4 px-5 pb-5">
                 <div className="h-15">
                     <h5 className="text-xl tracking-tight text-slate-900">{book.title}</h5>
-                    <span class="text-sm text-slate-900">{book.author}</span>
+                    <span className="text-sm text-slate-900">{book.author}</span>
                 </div>
                 <div className="mt-8 mb-3 flex items-center justify-between">
                     <p>
