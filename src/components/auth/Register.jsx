@@ -1,9 +1,17 @@
 import { Link } from "react-router";
+import { useActionState, useState } from "react";
+import { useAuthForm } from "../../api/authApi";
+import ErrorAlert from "../alerts/Error";
 
 export default function Register() {
+    const [error, setError] = useState(null)
+    const handleRegister = useAuthForm(setError)
+    const [state, formAction, pending] = useActionState(handleRegister, {email:'', password:'', rePass:''})
+    
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col  py-10 sm:px-6 lg:px-8">
-            {/* ERROR HERE */}
+            {error && <ErrorAlert error={error} />}
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 
@@ -12,7 +20,7 @@ export default function Register() {
                 </h2>
                 <p className="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
                     <Link
-                        href="/login"
+                        to="/login"
                         className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
                     >
                         Or login to your account
@@ -21,27 +29,9 @@ export default function Register() {
             </div>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form method="POST" action="#">
+                    <form action={formAction}>
                         
-                        <div className="mt-6">
-                            <label
-                                htmlFor="username"
-                                className="block text-sm font-medium leading-5 text-gray-700"
-                            >
-                                Username
-                            </label>
-                            <div className="mt-1 flex rounded-md shadow-sm">
-                                
-                                <input
-                                    id="username"
-                                    name="username"
-                                    placeholder="johnDoe1"
-                                    type="text"
-                                    required
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                />
-                            </div>
-                        </div>
+                        
                         <div className="mt-6">
                             <label
                                 htmlFor="email"
@@ -57,6 +47,7 @@ export default function Register() {
                                     type="email"
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                    defaultValue={state.email}
                                 />
                                 <div className="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg
@@ -112,6 +103,7 @@ export default function Register() {
                                 <button
                                     type="submit"
                                     className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-400 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                                    disabled={pending}
                                 >
                                     Create account
                                 </button>
