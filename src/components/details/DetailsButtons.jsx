@@ -1,10 +1,17 @@
-export default function DetailsButtons({isOwner}) {
+import { useNavigate } from "react-router"
+
+export default function DetailsButtons({isOwner, bookId}) {
+    const navigate = useNavigate()
+
     return (
     <>
     {isOwner ? 
         <div className="flex -mx-2 mb-4">
             <div className="w-1/2 px-2">
-                <button className="w-full bg-green-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-800 dark:hover:bg-gray-700">Edit</button>
+                <button 
+                className="w-full bg-green-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-800 dark:hover:bg-gray-700"
+                onClick={() => {navigate(`/books/${bookId}/edit`)}}
+                >Edit</button>
             </div>
             <div className="w-1/2 px-2">
                 <button className="w-full bg-red-800 dark:bg-gray-700 text-gray-100 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-700 dark:hover:bg-gray-600">Delete</button>

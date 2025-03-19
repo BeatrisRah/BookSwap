@@ -17,6 +17,8 @@ export default function ProductDetails() {
             <NotFound />
         </>)
     }
+
+
     
     return (
     <div className="bg-gray-100 dark:bg-gray-800 py-8">
@@ -27,7 +29,7 @@ export default function ProductDetails() {
                     <div className="h-[700px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                         <img className="w-full h-full object-fit" src={book.imageUrl} alt="Product Image" />
                     </div>
-                    {user ? <DetailsButtons isOwner={isOwner} />:
+                    {user ? <DetailsButtons isOwner={isOwner} bookId={bookId} />:
                     <div className="flex -mx-2 mb-4 mt-6">
                         <div className="w-1/2 px-2">
                             <Link 
