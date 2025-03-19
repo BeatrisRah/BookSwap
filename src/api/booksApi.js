@@ -154,7 +154,7 @@ export function useEdit(currentImage, bookId){
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
 
-        delete data.file; //Delete image file
+        delete data.file; //Delete image file bere checking,uploading
         try{
             checkData(data)
             if (imageObject.imageFile !== currentImage){

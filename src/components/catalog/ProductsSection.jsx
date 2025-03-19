@@ -92,7 +92,7 @@ export default function ProductList({filter = {}}) {
                     </div>
                 </nav>
 
-                <div className="w-full p-6 flex flex-row m-auto justify-center gap-4 flex-wrap lg:justify-start lg:flex-nowrap">
+                <div className="w-full p-6 flex flex-row m-auto justify-center gap-4 flex-wrap lg:justify-start">
                     {pending ? <div className="loader"></div> : 
                     bookList.map(el => <Product book={el} key={el.id} />)}
                     
