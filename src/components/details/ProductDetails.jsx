@@ -29,16 +29,7 @@ export default function ProductDetails() {
                     <div className="h-[700px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                         <img className="w-full h-full object-fit" src={book.imageUrl} alt="Product Image" />
                     </div>
-                    {user ? <DetailsButtons isOwner={isOwner} bookId={bookId} />:
-                    <div className="flex -mx-2 mb-4 mt-6">
-                        <div className="w-1/2 px-2">
-                            <Link 
-                            className="w-full bg-blue-400 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-blue-500 dark:hover:bg-gray-600"
-                            to={'/login'}
-                                >Sigh In To Buy!
-                            </Link>
-                        </div>
-                    </div>}
+                    
                     
                 </div>
                 <div className="md:flex-1 px-4">
@@ -75,6 +66,17 @@ export default function ProductDetails() {
                             Posted by: {book.ownerEmail}
                         </h3>
                     </div>
+
+                    {user ? <DetailsButtons isOwner={isOwner} bookId={bookId} />:
+                    <div className="flex -mx-2 mb-4 mt-6">
+                        <div className="w-1/2 px-2">
+                            <Link 
+                            className="w-full bg-blue-400 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-blue-500 dark:hover:bg-gray-600"
+                            to={'/login'}
+                                >Sigh In To Buy!
+                            </Link>
+                        </div>
+                    </div>}
                 </div>
             </div>
         </div>
