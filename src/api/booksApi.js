@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 import { db } from "../../firebaseinit";
@@ -101,6 +101,8 @@ export function useFetchOne(bookId){
     const [pending, setPending] = useState(true)
     const [error, setError] = useState(null)
 
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         const getBook = async() => {
@@ -125,7 +127,16 @@ export function useFetchOne(bookId){
 
     }, [bookId])
 
-    return [book, pending, error]
+    const deleteBookHanlder = async () => {
+        try{
+            await deleteDoc(doc(db, 'books', bookId))
+            navigate('/books')
+        } catch(err){
+            setError(err.message)
+        }
+    }
+
+    return [book, pending, error, deleteBookHanlder]
 }
 
 export function useEdit(currentImage, bookId){
@@ -175,3 +186,4 @@ export function useEdit(currentImage, bookId){
 
     return [formSubmit, changeImageUrl, imageObject.imagePreview]
 }
+

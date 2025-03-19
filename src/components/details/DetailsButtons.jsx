@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 
-export default function DetailsButtons({isOwner, bookId}) {
+export default function DetailsButtons({isOwner, bookId, openDelete}) {
     const navigate = useNavigate()
 
     return (
@@ -14,7 +14,11 @@ export default function DetailsButtons({isOwner, bookId}) {
                 >Edit</button>
             </div>
             <div className="w-1/2 px-2">
-                <button className="w-full bg-red-800 dark:bg-gray-700 text-gray-100 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-700 dark:hover:bg-gray-600">Delete</button>
+                <button 
+                className="w-full bg-red-800 dark:bg-gray-700 text-gray-100 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-700 dark:hover:bg-gray-600"
+                onClick={openDelete}
+                >Delete</button>
+                
             </div>
         </div>:
         <div className="flex -mx-2 mb-4">
