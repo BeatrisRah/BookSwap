@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 import { db } from "../../firebaseinit";
@@ -70,6 +70,11 @@ export function useFetch( defaultState = [], filter ={}){
         const getData = async () => {
             let q = collection(db, 'books')
 
+            if(filter?.genre && filter?.genre !== 'all'){
+                const formattedFilter = filter.genre.replace('-', ' ')
+                q = query(q, where('genre', '==', formattedFilter))
+            }
+
             if(filter?.latest){
                 q = query(q, orderBy('createdAt', 'desc'), limit(4))
                 
@@ -82,6 +87,8 @@ export function useFetch( defaultState = [], filter ={}){
             } else if (filter?.sortBy === "price-low") {
                 q = query(q, orderBy("price", "asc"));
             }
+
+            
 
             const querySnapShot = await getDocs(q);
             setPending(false)
