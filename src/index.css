@@ -69,3 +69,8 @@
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {to{transform: rotate(1turn)}}
+
+
+.custom-shadow{
+  box-shadow: -5px 4px 33px -4px #6b6b6b;
+}
