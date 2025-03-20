@@ -94,7 +94,7 @@ export default function ProductList({filter = {}}) {
                     </div>
                 </nav>
                 <div className="w-11/12 flex m-auto">
-                    <Sidebar handleFilterChange={handleFilterChange} />
+                    {!filter.latest && <Sidebar handleFilterChange={handleFilterChange} />}
                     <div className="w-10/12 p-6 flex flex-row justify-center gap-4 flex-wrap lg:justify-start">
                         
                         {pending ? <div className="loader m-auto"></div> : 
