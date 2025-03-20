@@ -67,9 +67,10 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
     return [onTradeHandler, pending, error]
 }
 
-export function useFetchChats(userEmail){
+export function useFetchChats(userEmail, chatId){
     const [chatsState, setChats] = useState([])
     const [pending, setPending] = useState(true)
+    const [chatIdDefault, setChatIdDefault] = useState(null)
 
     useEffect(() => {
         const getAll = async () => {
@@ -80,17 +81,23 @@ export function useFetchChats(userEmail){
             const chats = chatsDocs.docs.map(chatDoc => ({id:chatDoc.id, ...chatDoc.data()}))
             setChats(chats)
             setPending(false)
+            if(chatId){
+                setChatIdDefault(chatId)
+            } else{
+                setChatIdDefault(chats[0].id)
+            }
         }
         getAll()
     }, [userEmail])
 
-    return [pending, chatsState]
+    return [pending, chatsState, chatIdDefault]
 }
 
 export function useFetchMessages(chatId){
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
+        if(!chatId) return;
         const messageRef = collection(db, 'chats', chatId, 'messages')
 
         const q = query(messageRef, orderBy('createdAt', 'asc'));
