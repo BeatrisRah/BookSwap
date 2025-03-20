@@ -1,5 +1,5 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
-import { useState } from "react"
+import { addDoc, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore"
+import { useEffect, useState } from "react"
 import { db } from "../../firebaseinit"
 import { useNavigate } from "react-router"
 
@@ -65,4 +65,46 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
         }
     }
     return [onTradeHandler, pending, error]
+}
+
+export function useFetchChats(userEmail){
+    const [chatsState, setChats] = useState([])
+    const [pending, setPending] = useState(true)
+
+    useEffect(() => {
+        const getAll = async () => {
+            const chatsRef = collection(db, 'chats')
+            const q = query(chatsRef, where('users', 'array-contains', userEmail))
+
+            const chatsDocs = await getDocs(q)
+            const chats = chatsDocs.docs.map(chatDoc => ({id:chatDoc.id, ...chatDoc.data()}))
+            setChats(chats)
+            setPending(false)
+        }
+        getAll()
+    }, [userEmail])
+
+    return [pending, chatsState]
+}
+
+export function useFetchMessages(chatId){
+    const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        const messageRef = collection(db, 'chats', chatId, 'messages')
+
+        const q = query(messageRef, orderBy('createdAt', 'asc'));
+
+        const unsubscribe  = onSnapshot(q, (snapshot) => {
+            let newMessage = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setMessages(newMessage)
+        });
+
+        return () => unsubscribe()
+    }, [chatId])
+
+    return [messages]
 }

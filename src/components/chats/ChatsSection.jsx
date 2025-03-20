@@ -1,4 +1,12 @@
+import { useParams } from "react-router";
+import { useFetchChats, useFetchMessages } from "../../api/chatApi";
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function ChatsSection() {
+    const {user} = useAuth()
+    const [pending, chats] = useFetchChats(user.email)
+    
+    
     return (
         <div className="flex h-[55rem] no-scrollbar overflow-hidden">
             {/* Sidebar */}
@@ -25,14 +33,17 @@ export default function ChatsSection() {
                 </header>
                 {/* Contact List */}
                 <div className="overflow-y-auto h-screen p-3 mb-9 pb-20">
+                    {chats.map(c => 
                     <div className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md">
                         <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
                             <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="w-12 h-12 rounded-full" />
                         </div>
                         <div className="flex-1">
-                            <h2 className="text-lg font-semibold">Alice</h2>
+                            <h2 className="text-lg font-semibold">{c?.offerDetails.requestedBook.owner}</h2>
                         </div>
-                    </div>
+                    </div>)}
+                    
+                    
                     
                 </div>
             </div>

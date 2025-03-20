@@ -13,7 +13,7 @@ export default function TradeSection() {
     const [ownerIdFilter] = useState({byOwnerId:user.uid}) //Makes infidante loop if filter is not state
     const [selectedBook, setSelectedBook] = useState(null)
 
-    const [onTradeHandler, pendingOnChat, error] = useChatRoomCreate(user.uid, selectedBook, book.owner, book)
+    const [onTradeHandler, pendingOnChat, error] = useChatRoomCreate(user.email, selectedBook, book.ownerEmail, book)
 
     const [pending, usersBooks] = useFetch([], ownerIdFilter)
     const isBookList = usersBooks.length > 0;
