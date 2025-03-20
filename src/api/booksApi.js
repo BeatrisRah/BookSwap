@@ -82,10 +82,10 @@ export function useFetch( defaultState = [], filter ={}){
                 q = query(q, orderBy("createdAt", "desc"));
 
             } else if (filter?.sortBy === "price-high") {
-                q = query(q, orderBy("price", "desc"));
+                q = query(q, orderBy("price", "desc"), orderBy("__name__"));
 
             } else if (filter?.sortBy === "price-low") {
-                q = query(q, orderBy("price", "asc"));
+                q = query(q, orderBy("price", "asc"), orderBy("__name__"));
             }
 
             
@@ -181,7 +181,7 @@ export function useEdit(currentImage, bookId){
             }
 
             const bookRef = doc(db, 'books', bookId)
-            await updateDoc(bookRef, data)
+            await updateDoc(bookRef, {...data, price:Number(data.price)})
             navigate(`/books/${bookId}/details`)
         } catch(err){
             console.log(err.message);
