@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Product from "./catalog-product/Product";
 import { useSearchParams } from "react-router";
 import { useFetch } from "../../api/booksApi";
+import Sidebar from "./SideBar";
 
 export default function ProductList({filter = {}}) {
     const [defaultFilter, setFaultFilter] = useState(filter)
@@ -19,27 +20,28 @@ export default function ProductList({filter = {}}) {
         { name: "Price: Low to High", value: "price-low" },
     ];
 
-    const handleFilterChange = (filter) => {
-        setSearchParams({ sortBy: filter });
+    const handleFilterChange = (filterVal, filterType) => {
+        const currentPAram = Object.fromEntries(searchParams.entries());
+        setSearchParams({...currentPAram, [filterType]: filterVal});
         setIsOpen(false);
     };
 
     useEffect(() => {
-        const filters = searchParams.get('sortBy')
-        setFaultFilter(f => ({...f, sortBy:filters}))
+        const filters = Object.fromEntries(searchParams.entries());
+        setFaultFilter(f => ({...f, ...filters}))
         
     }, [searchParams])
 
     return (
-        <section className="bg-white py-8 w-11/12 m-auto">
-            <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
+        <section className="bg-white py-8 w-full m-auto">
+            <div className="mx-auto flex items-center flex-wrap pb-12">
                 <nav id="store" className="w-full z-30 top-0 px-6 py-1">
-                    <div className="w-full container mx-auto flex flex-wrap items-center md:justify-center lg:justify-between mt-0 px-2 py-3 ">
+                    <div className="w-11/12 mx-auto flex flex-wrap items-center md:justify-center lg:justify-between mt-0 px-2 py-3 ">
                         <div
                             className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
                         >
                             
-                            {filter.latest ? 'Recently Added': 'BookList'}
+                            {filter.latest ? 'Recently Added': ''}
                         </div>
                         
 
@@ -66,7 +68,7 @@ export default function ProductList({filter = {}}) {
                                             <button 
                                             key={f.value} 
                                             className="block w-full text-left px-4 py-2 hover:bg-gray-200"
-                                            onClick={() => handleFilterChange(f.value)}
+                                            onClick={() => handleFilterChange(f.value, 'sortBy')}
                                             >
                                             {f.name}
                                             </button>
@@ -91,14 +93,14 @@ export default function ProductList({filter = {}}) {
                         </div>}
                     </div>
                 </nav>
-
-                <div className="w-full p-6 flex flex-row m-auto justify-center gap-4 flex-wrap lg:justify-start">
-                    {pending ? <div className="loader"></div> : 
-                    bookList.map(el => <Product book={el} key={el.id} />)}
-                    
-                    
-
-                    
+                <div className="w-11/12 flex m-auto">
+                    <Sidebar handleFilterChange={handleFilterChange} />
+                    <div className="w-10/12 p-6 flex flex-row justify-center gap-4 flex-wrap lg:justify-start">
+                        
+                        {pending ? <div className="loader m-auto"></div> : 
+                        bookList.map(el => <Product book={el} key={el.id} />)}
+                        
+                    </div>
                 </div>
             </div>
         </section>
