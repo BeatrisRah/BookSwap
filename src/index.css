@@ -74,3 +74,7 @@
 .custom-shadow{
   box-shadow: -5px 4px 33px -4px #6b6b6b;
 }
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}

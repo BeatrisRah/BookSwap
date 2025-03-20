@@ -10,18 +10,20 @@ import Logout from './components/auth/Logout.jsx'
 import ProductDetails from './components/details/ProductDetails.jsx'
 import EditProduct from './components/create-or-update/Edit.jsx'
 import CreateSection from './components/create-or-update/CreateSection.jsx'
+import ChatsSection from './components/chats/ChatsSection.jsx'
 
 export default function App() {    
     return (
         <>
         <Navigation />
-        <div className="carousel relative container mx-auto" style={{ 'maxWidth': '100%' }}>
+        <div className="carousel relative mx-auto" style={{ 'maxWidth': '100%' }}>
             <Routes>
                 <Route path='/' element={<Hero />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/logout' element={<Logout />} />
+                <Route path='/chats' element={<ChatsSection />} />
 
                 <Route path='/books' element={<ProductList filter={{}} />} />
                 <Route path='/books/create' element={<CreateSection />} />

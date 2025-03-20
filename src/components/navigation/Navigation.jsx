@@ -95,7 +95,7 @@ export default function Navigation() {
                                 </Link>
                                 <Link 
                                     className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"
-                                    to="/logout">
+                                    to="/chats">
                                 Chats
                                 </Link>
                                 <Link 
