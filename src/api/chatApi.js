@@ -38,7 +38,7 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
 
             await addDoc(messagesRef, {
                 senderId: offeringUser,
-                text: `Hey, I’d like to trade my "${offeringUserBook.title}" for your "${ownerBook.title}". Let me know!`,
+                text: `Hey, I’d like to trade my "${offeringUserBook.title}" book for your "${ownerBook.title}" book. Waiting to hear from you!`,
                 tradeOfferDetails: {
                     offeredBook: {
                         id: offeringUserBook.id,
