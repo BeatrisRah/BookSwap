@@ -11,6 +11,7 @@ import ProductDetails from './components/details/ProductDetails.jsx'
 import EditProduct from './components/create-or-update/Edit.jsx'
 import CreateSection from './components/create-or-update/CreateSection.jsx'
 import ChatsSection from './components/chats/ChatsSection.jsx'
+import TradeSection from './components/trade/TradeSection.jsx'
 
 export default function App() {    
     return (
@@ -29,6 +30,7 @@ export default function App() {
                 <Route path='/books/create' element={<CreateSection />} />
                 <Route path='/books/:bookId/details' element={<ProductDetails />} />
                 <Route path='/books/:bookId/edit' element={<EditProduct />} />
+                <Route path='/books/:bookId/trade' element={<TradeSection />} />
             </Routes>
 
         </div>

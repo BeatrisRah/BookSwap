@@ -70,6 +70,10 @@ export function useFetch( defaultState = [], filter ={}){
         const getData = async () => {
             let q = collection(db, 'books')
 
+            if(filter?.byOwnerId){
+                q = query(q, where('owner', '==', filter.byOwnerId))
+            }
+
             if(filter?.genre && filter?.genre !== 'all'){
                 const formattedFilter = filter.genre.replace('-', ' ')
                 q = query(q, where('genre', '==', formattedFilter))
@@ -145,6 +149,7 @@ export function useFetchOne(bookId){
 
     return [book, pending, error, deleteBookHanlder]
 }
+
 
 export function useEdit(currentImage, bookId){
     const [imageObject, setImageObject] = useState({}); 
