@@ -1,4 +1,4 @@
-import { addDoc, collection, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore"
+import { addDoc, arrayUnion, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp, updateDoc, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { db } from "../../firebaseinit"
 import { useNavigate } from "react-router"
@@ -39,7 +39,10 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
                 if(currentbooks.includes(offeringUserBook.id) || currentbooks.includes(ownerBook.id)){
                     throw new Error('This offer was alredy made!')
                 }
+
                 chatId = querySnapShot.docs[0].id
+                
+                await updateDoc(querySnapShot.docs[0].ref, {bookOffersIds: arrayUnion(offeringUserBook.id, ownerBook.id)})
             }
 
             

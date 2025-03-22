@@ -24,7 +24,6 @@ export function useCreateBook(){
         
         try{
             checkData(data)
-
             const imageUrl = await createImageUrl(data.file)
             const docRef = await addDoc(collection(db, 'books'), 
                         {
