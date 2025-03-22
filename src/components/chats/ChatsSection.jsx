@@ -12,7 +12,8 @@ export default function ChatsSection() {
     const [messages] = useFetchMessages(defaultchatId)
     const currentChatDetails = messages ? chats.find(chat => chat.id === defaultchatId) : null;
     
-
+    //check if there is chats at all, if not 
+    // display a diffrent window (This was added to avoid flickering between screens)
     const mainChatArea = chats?.length > 0 ? 
     <MessagesBox messages={messages} currentChatDetails={currentChatDetails} />:
     <div className="m-auto bg-[url(/empy_messages_bg.png)] w-11/12 h-full bg-cover bg-center flex justify-center items-center">
@@ -24,7 +25,7 @@ export default function ChatsSection() {
             {/* Sidebar */}
             <div className="w-1/5 bg-white border-r border-gray-300">
                 {/* Sidebar Header */}
-                <header className="p-4 border-b rounded-md border-gray-300 flex justify-between items-center bg-blue-500 text-white">
+                <header className="p-4 border-b border-gray-300 flex justify-between items-center bg-blue-500 text-white">
                     <h1 className="text-2xl font-semibold">Chat Web</h1>
                 </header>
                 {/* Contact List */}
@@ -35,7 +36,7 @@ export default function ChatsSection() {
                     chats.map(c => 
                         <Link 
                         to={`/chats/${c.id}`} 
-                        className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
+                        className="flex items-center mb-4 hover:bg-gray-100 p-2 rounded-md"
                         key={c.id}>
                             <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
                                 <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="w-12 h-12 rounded-full" />

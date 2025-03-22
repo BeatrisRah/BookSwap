@@ -3,10 +3,10 @@ import TradeOfferMessage from "./TradeOfferMessage";
 export default function OutComingMessage({message}) {
 
     return (
-    <div className="flex justify-end mb-4 cursor-pointer">
+    <div className="flex justify-end mb-4">
         {message.tradeOfferDetails ? 
         <TradeOfferMessage message={message} isIncoming={false} /> :
-        <div className="flex max-w-96 bg-indigo-500 text-white rounded-lg p-3 gap-3">
+        <div className="flex max-w-96 bg-blue-500 text-white rounded-lg p-3 gap-3">
             <p>{message.text}</p>
         </div>}
         

@@ -22,11 +22,11 @@ export default function MessagesBox({messages, currentChatDetails}) {
     return (
     <div className="flex-1">
     {/* Chat Header */}
-        <header className="bg-white p-4 text-gray-700">
+        <header className="bg-gray-100 p-4 text-gray-700">
             <h1 className="text-2xl font-semibold">{contactName}</h1>
         </header>
         {/* Chat Messages */}
-        <div className="h-screen overflow-y-auto p-4 pb-36 bg-gray-200">
+        <div className="h-10/12 overflow-y-auto p-4 pb-36 bg-gray-200">
             {error && <ErrorAlert error={error} />}
             {/* Incoming Message */}
             {messages?.map(message => message?.senderId === user.email ? 
@@ -37,7 +37,7 @@ export default function MessagesBox({messages, currentChatDetails}) {
             
         </div>
         {/* Chat Input */}
-        <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4">
+        <footer className="bg-white p-4 absolute bottom-0 w-3/4">
             <div className="flex items-center">
                 <input 
                     type="text" 
