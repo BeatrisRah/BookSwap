@@ -32,7 +32,7 @@ export default function TradeSection() {
                 </div>
                 <div className="w-2/3 p-10 rounded-md bg-white">
                     <h1 className="text-4xl font-semibold text-gray-700 mb-10">Trade For:</h1>
-                    <div>
+                    <div className="flex gap-2">
                         {pending && <div className="loader m-auto"></div>}
                         {isBookList ? 
                         (usersBooks.map(book => 

@@ -17,24 +17,33 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
             
             setPending(true)
             const chatRef = collection(db, 'chats');
-            const newChatRef = await addDoc(chatRef, {
-                users:[offeringUser, owner],
-                offerDetails:{
 
-                    offeredBook: {
+            const chatParticipants = [offeringUser, owner].sort(); 
 
-                        id: offeringUserBook.id, 
-                        owner: offeringUser},
+            const q = query(chatRef, where('users', 'array-contains-any', chatParticipants))
+            const querySnapShot  = await getDocs(q)
 
-                    requestedBook:{
+            let chatId = null;
+            
 
-                        id: ownerBook.id, 
-                        owner: owner
-                    }
+            if(querySnapShot.empty){
+                const newChatRef = await addDoc(chatRef, {
+                    users:[offeringUser, owner],
+                    bookOffersIds:[
+                        offeringUserBook.id,
+                        ownerBook.id]
+                })
+                chatId = newChatRef.id
+            } else{
+                const currentbooks = querySnapShot.docs[0].data().bookOffersIds;
+                if(currentbooks.includes(offeringUserBook.id) || currentbooks.includes(ownerBook.id)){
+                    throw new Error('This offer was alredy made!')
                 }
-            })
+                chatId = querySnapShot.docs[0].id
+            }
 
-            const messagesRef = collection(db, "chats", newChatRef.id, "messages");
+            
+            const messagesRef = collection(db, "chats", chatId, "messages");
 
             await addDoc(messagesRef, {
                 senderId: offeringUser,
@@ -56,7 +65,7 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
             });
 
             setError(false)
-            navigate(`/chats/${newChatRef.id}`)
+            navigate(`/chats/${chatId}`)
 
         } catch(err){
             setError(err.message)
