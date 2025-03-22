@@ -1,7 +1,6 @@
 import TradeOfferMessage from "./TradeOfferMessage";
 
 export default function OutComingMessage({message}) {
-    // console.log(message);
 
     return (
     <div className="flex justify-end mb-4 cursor-pointer">

@@ -2,13 +2,15 @@ import { useAuth } from "../../contexts/AuthContext"
 import IncomingMessage from "./single-chat/IncomingMessage"
 import OutComingMessage from "./single-chat/OutcomingMessage"
 
-export default function MessagesBox({messages}) {
+export default function MessagesBox({messages, currentChatDetails}) {
     const {user} = useAuth()
+    const contactName = currentChatDetails?.users.filter(u => u !== user.email)
+    
     return (
     <div className="flex-1">
     {/* Chat Header */}
         <header className="bg-white p-4 text-gray-700">
-            <h1 className="text-2xl font-semibold">Alice</h1>
+            <h1 className="text-2xl font-semibold">{contactName}</h1>
         </header>
         {/* Chat Messages */}
         <div className="h-screen overflow-y-auto p-4 pb-36 bg-gray-200">

@@ -10,7 +10,7 @@ export default function ChatsSection() {
     
     const [pending, chats, defaultchatId] = useFetchChats(user.email, chatId)
     const [messages] = useFetchMessages(defaultchatId)
-
+    const currentChatDetails = chats.find(chat => chat.id === defaultchatId)
         
     
     return (
@@ -49,7 +49,7 @@ export default function ChatsSection() {
                             <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="w-12 h-12 rounded-full" />
                         </div>
                         <div className="flex-1">
-                            <h2 className="text-lg font-semibold">{c?.offerDetails.requestedBook.owner}</h2>
+                            <h2 className="text-lg font-semibold">{c?.users.filter(u => u !== user.email)}</h2>
                         </div>
                     </Link>)}
                     
@@ -58,7 +58,7 @@ export default function ChatsSection() {
                 </div>
             </div>
             {/* Main Chat Area */}
-            <MessagesBox messages={messages} />
+            <MessagesBox messages={messages} currentChatDetails={currentChatDetails} />
         </div>
 
 
