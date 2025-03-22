@@ -115,3 +115,32 @@ export function useFetchMessages(chatId){
 
     return [messages]
 }
+
+export function useSendMessageHandler(chatId){
+    const [pending, setPending] = useState(false)
+    const [error, setError] = useState(null)
+
+    const sendMessage = async (newMessageText, userEmail) => {
+        if(!newMessageText.trim()) return;
+
+        const messageRef = collection(db, 'chats', chatId, 'messages');
+
+        try{
+            setPending(true)
+            await addDoc(messageRef, {
+                text: newMessageText,
+                senderId: userEmail, 
+                isRead: false,
+                createdAt:serverTimestamp()
+            })
+            setError(false)
+
+        } catch(err){
+            setError(err.message)
+        } finally {
+            setPending(false)
+        }
+    }
+
+    return [sendMessage, pending, error]
+}
