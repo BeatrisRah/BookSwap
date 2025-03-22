@@ -25,6 +25,8 @@ export default function App() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/logout' element={<Logout />} />
                 <Route path='/chats' element={<ChatsSection />} />
+                <Route path='/chats/:chatId' element={<ChatsSection />} />
+
 
                 <Route path='/books' element={<ProductList filter={{}} />} />
                 <Route path='/books/create' element={<CreateSection />} />
