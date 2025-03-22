@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore"
+import { addDoc, collection, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { db } from "../../firebaseinit"
 import { useNavigate } from "react-router"
@@ -68,7 +68,7 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
 }
 
 export function useFetchChats(userEmail, chatId){
-    const [chatsState, setChats] = useState([])
+    const [chatsState, setChats] = useState(null)
     const [pending, setPending] = useState(true)
     const [chatIdDefault, setChatIdDefault] = useState(null)
 
@@ -78,6 +78,13 @@ export function useFetchChats(userEmail, chatId){
             const q = query(chatsRef, where('users', 'array-contains', userEmail))
 
             const chatsDocs = await getDocs(q)
+
+            if(chatsDocs.empty){
+                setChats([])
+                setPending(false)
+                return;
+            }
+
             const chats = chatsDocs.docs.map(chatDoc => ({id:chatDoc.id, ...chatDoc.data()}))
             setChats(chats)
             setPending(false)
@@ -88,27 +95,31 @@ export function useFetchChats(userEmail, chatId){
             }
         }
         getAll()
-    }, [userEmail])
+    }, [userEmail,chatId])
 
     return [pending, chatsState, chatIdDefault]
 }
 
 export function useFetchMessages(chatId){
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState(null)
+    
 
     useEffect(() => {
         if(!chatId) return;
+
         const messageRef = collection(db, 'chats', chatId, 'messages')
 
         const q = query(messageRef, orderBy('createdAt', 'asc'));
 
         const unsubscribe  = onSnapshot(q, (snapshot) => {
-            let newMessage = snapshot.docs.map(doc => ({
+            let newMessages = snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            setMessages(newMessage)
+            setMessages(newMessages)
         });
+
+
 
         return () => unsubscribe()
     }, [chatId])

@@ -7,13 +7,17 @@ import ErrorAlert from "../alerts/Error"
 
 export default function MessagesBox({messages, currentChatDetails}) {
     const {user} = useAuth()
-    const [newMessage, setNewMessage] = useState('')
     const contactName = currentChatDetails?.users.filter(u => u !== user.email)
+    
+
+    const [newMessage, setNewMessage] = useState('')
     const [sendMessage, pending, error] = useSendMessageHandler(currentChatDetails?.id)
 
     const handleSendMessage = async () => {
         await sendMessage(newMessage, user.email)
+        setNewMessage('')
     }
+
     
     return (
     <div className="flex-1">
@@ -25,10 +29,11 @@ export default function MessagesBox({messages, currentChatDetails}) {
         <div className="h-screen overflow-y-auto p-4 pb-36 bg-gray-200">
             {error && <ErrorAlert error={error} />}
             {/* Incoming Message */}
-            {messages.map(message => message?.senderId === user.email ? 
+            {messages?.map(message => message?.senderId === user.email ? 
                 <OutComingMessage key={message.id} message={message} /> :
                 <IncomingMessage key={message.id} message={message} />
             )}
+            
             
         </div>
         {/* Chat Input */}
