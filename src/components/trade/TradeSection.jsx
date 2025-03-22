@@ -38,13 +38,17 @@ export default function TradeSection() {
                         (usersBooks.map(book => 
                         <div 
                             key={book.id} 
-                            className="w-60 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                            className={`w-60 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl ${
+                                selectedBook === book ? 
+                                'border-4 border-blue-500 rounded-md':
+                                ''
+                            }`}
                             onClick={() => setSelectedBook(book)}
                             >
                             <div>
-                                <img src={book.imageUrl} alt="Product" className="h-60 w-full object-cover rounded-t-xl" />
+                                <img src={book.imageUrl} alt="Product" className="h-60 w-full object-cover rounded-t-md" />
                                 <div className="px-4 py-3 w-72">
-                                <p className="text-lg font-bold text-black truncate block capitalize">{book.title}</p>
+                                <p className="text-lg font-bold w-10/12 text-black truncate block capitalize">{book.title}</p>
                                 <div className="flex items-center">
                                     <p className="text-lg font-semibold text-black cursor-auto my-3">{book.price}$</p>
                                 </div>

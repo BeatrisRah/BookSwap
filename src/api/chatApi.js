@@ -27,6 +27,7 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
             
 
             if(querySnapShot.empty){
+                //if no chat exists
                 const newChatRef = await addDoc(chatRef, {
                     users:[offeringUser, owner],
                     bookOffersIds:[
@@ -35,6 +36,7 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
                 })
                 chatId = newChatRef.id
             } else{
+                //if it does check if the offer was alredy made
                 const currentbooks = querySnapShot.docs[0].data().bookOffersIds;
                 if(currentbooks.includes(offeringUserBook.id) || currentbooks.includes(ownerBook.id)){
                     throw new Error('This offer was alredy made!')
