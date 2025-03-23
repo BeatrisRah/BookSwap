@@ -25,6 +25,11 @@ export default function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='/books' element={<ProductList filter={{}} />} />
 
+                <Route element={<GuestGuard />}>
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/login' element={<Login />} />
+
+                </Route>
 
                 <Route element={<AuthGuard />}>
                     <Route path='/logout' element={<Logout />} />
