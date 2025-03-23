@@ -12,6 +12,8 @@ import EditProduct from './components/create-or-update/Edit.jsx'
 import CreateSection from './components/create-or-update/CreateSection.jsx'
 import ChatsSection from './components/chats/ChatsSection.jsx'
 import TradeSection from './components/trade/TradeSection.jsx'
+import AuthGuard from './guards/AuthGuard.jsx'
+import GuestGuard from './guards/GuestGuard.jsx'
 
 export default function App() {    
     return (
@@ -21,18 +23,22 @@ export default function App() {
             <Routes>
                 <Route path='/' element={<Hero />} />
                 <Route path='/about' element={<About />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/logout' element={<Logout />} />
-                <Route path='/chats' element={<ChatsSection />} />
-                <Route path='/chats/:chatId' element={<ChatsSection />} />
-
-
                 <Route path='/books' element={<ProductList filter={{}} />} />
-                <Route path='/books/create' element={<CreateSection />} />
-                <Route path='/books/:bookId/details' element={<ProductDetails />} />
-                <Route path='/books/:bookId/edit' element={<EditProduct />} />
-                <Route path='/books/:bookId/trade' element={<TradeSection />} />
+
+
+                <Route element={<AuthGuard />}>
+                    <Route path='/logout' element={<Logout />} />
+                    <Route path='/chats' element={<ChatsSection />} />
+                    <Route path='/chats/:chatId' element={<ChatsSection />} />
+                    <Route path='/books/create' element={<CreateSection />} />
+                    <Route path='/books/:bookId/details' element={<ProductDetails />} />
+                    <Route path='/books/:bookId/edit' element={<EditProduct />} />
+                    <Route path='/books/:bookId/trade' element={<TradeSection />} />
+
+
+                </Route>
+
+
             </Routes>
 
         </div>

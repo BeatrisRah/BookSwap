@@ -7,10 +7,10 @@ import { AuthProvider } from './components/AuthProvider'
 
 createRoot(document.getElementById('root')).render(
     <>
-    <AuthProvider>
       <BrowserRouter>
+        <AuthProvider>
         <App />
+        </AuthProvider>  
       </BrowserRouter>
-    </AuthProvider>  
     </>
 )

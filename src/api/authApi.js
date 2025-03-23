@@ -1,9 +1,7 @@
 import { useAuth } from "../contexts/AuthContext"
-import { useNavigate } from "react-router";
 import { checkData } from "../utils/formUtils";
 
 export function useAuthForm(seterror){
-    const navigate = useNavigate()
     const {login, sighUp} = useAuth()
     
     const authFormHandler = async (previusState, formData) => {
@@ -19,12 +17,11 @@ export function useAuthForm(seterror){
                 await login(userData.email, userData.password) 
 
             }
-            navigate('/books')
         } catch(err){
             seterror(err.message)
         }
 
-        return userData;
+        // return userData;
     }
 
     return authFormHandler;
