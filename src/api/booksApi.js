@@ -8,6 +8,8 @@ import {  createImageUrl } from "../utils/createUpdateUtils";
 import { checkData } from "../utils/formUtils";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
+
+
 export function useCreateBook(){
     const [state, dispatch] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
 
@@ -53,14 +55,14 @@ export function useCreateBook(){
 }
 
 export function useFetch( defaultState = [], filter ={}){
-    const [pending, setPending] = useState(true)
-    const [state, setState] = useState(defaultState)
+    const [state, dispatch] = useReducer(fetchReducer.reducer, {
+        data: defaultState,
+        pending: true,
+    })
 
-    // ** TYPE: ONE DOCUMENT OR ALL
 
     useEffect(() => {
         let isCancelled = false
-        setPending(true)
         
         const getData = async () => {
             let q = collection(db, 'books')
@@ -90,12 +92,11 @@ export function useFetch( defaultState = [], filter ={}){
             
 
             const querySnapShot = await getDocs(q);
-            setPending(false)
             return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
             
         }
         if(!isCancelled){
-            getData().then(res => setState(res))
+            getData().then(res => dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:res}))
         }
         
         return () => {
@@ -103,7 +104,7 @@ export function useFetch( defaultState = [], filter ={}){
         }
     }, [filter])
 
-    return [pending, state]
+    return [state.pending, state.data]
 }
 
 export function useFetchOne(bookId){
