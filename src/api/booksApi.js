@@ -1,27 +1,33 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import {  createImageUrl } from "../utils/createUpdateUtils";
 import { checkData } from "../utils/formUtils";
+import { ACTION_TYPES } from "../reducers/postActionTypes";
+import fetchReducer from "../reducers/fetchReducer";
 export function useCreateBook(){
-    const [error, setError] = useState(null)
-    const [newBook, setNewBook] = useState({})
-    const [pending, setPending] = useState(false)
-    // ! GUEST CANT MAKE REQUESTS
+    // const [error, setError] = useState(null)
+    // const [newBook, setNewBook] = useState({})
+    // const [pending, setPending] = useState(false)
+
+
+    const [state, dispatch] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
+
     const {user} = useAuth()
     const navigate = useNavigate()
 
     const formSubmit = async (e) => {
         e.preventDefault()
-        setPending(true)
+        // setPending(true)
+        dispatch({type:ACTION_TYPES.FETCH_START})
 
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
-        setNewBook(data)
-        
+        // setNewBook(data)
+        dispatch({type:ACTION_TYPES.FETCH_CURRENT_DATA, data:data})
         try{
             checkData(data)
             const imageUrl = await createImageUrl(data.file)
@@ -40,20 +46,19 @@ export function useCreateBook(){
                         })
             // adding the id to doc
             await updateDoc(doc(db, 'books', docRef.id), {id:docRef.id})
-            
+            dispatch({type:ACTION_TYPES.FETCH_FINAL})
+
             navigate('/books')
         } catch(err){
-            setError(err.message)
+            dispatch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
             return;
-        } finally{
-            setPending(false)
-        }
-        setError(null)
-        setNewBook({})
+        } 
+        // setError(null)
+        // setNewBook({})
     }
 
 
-    return [formSubmit, newBook, pending , error]
+    return [formSubmit, state.data, state.pending , state.error]
 }
 
 export function useFetch( defaultState = [], filter ={}){
@@ -107,9 +112,8 @@ export function useFetch( defaultState = [], filter ={}){
 }
 
 export function useFetchOne(bookId){
-    const [book, setBook] = useState({})
-    const [pending, setPending] = useState(true)
-    const [error, setError] = useState(null)
+
+    const [state, dispatch] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
 
     const navigate = useNavigate()
 
@@ -118,15 +122,15 @@ export function useFetchOne(bookId){
         const getBook = async() => {
             try{
                 const bookRef = doc(db, 'books', bookId);
+                dispatch({type:ACTION_TYPES.FETCH_START})
+
                 const bookSnap = await getDoc(bookRef)
 
                 if (!bookSnap.exists()) throw new Error('Book doesnt exist!');
 
-                setBook(bookSnap.data())
+                dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:bookSnap.data()})
             } catch(err){
-                setError(err.message)
-            } finally{
-                setPending(false)
+                dispatch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
             }
         }
         if(!bookId) {
@@ -140,13 +144,14 @@ export function useFetchOne(bookId){
     const deleteBookHanlder = async () => {
         try{
             await deleteDoc(doc(db, 'books', bookId))
+            dispatch({type:ACTION_TYPES.FETCH_FINAL})
             navigate('/books')
         } catch(err){
-            setError(err.message)
+            dispatch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
         }
     }
 
-    return [book, pending, error, deleteBookHanlder]
+    return [state.data, state.pending, state.error, deleteBookHanlder]
 }
 
 
