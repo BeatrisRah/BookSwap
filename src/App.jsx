@@ -14,6 +14,7 @@ import ChatsSection from './components/chats/ChatsSection.jsx'
 import TradeSection from './components/trade/TradeSection.jsx'
 import AuthGuard from './guards/AuthGuard.jsx'
 import GuestGuard from './guards/GuestGuard.jsx'
+import NotFound from './components/not-found/NotFound.jsx'
 
 export default function App() {    
     return (
@@ -39,9 +40,9 @@ export default function App() {
                     <Route path='/books/:bookId/details' element={<ProductDetails />} />
                     <Route path='/books/:bookId/edit' element={<EditProduct />} />
                     <Route path='/books/:bookId/trade' element={<TradeSection />} />
-
-
                 </Route>
+
+                <Route path='/*' element={<NotFound />} />
 
 
             </Routes>
