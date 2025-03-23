@@ -156,8 +156,6 @@ export function useSendMessageHandler(chatId){
         pending: false,
         error:null
     })
-    // const [pending, setPending] = useState(false)
-    // const [error, setError] = useState(null)
 
     const sendMessage = async (newMessageText, userEmail) => {
         if(!newMessageText.trim()) return;
@@ -165,7 +163,6 @@ export function useSendMessageHandler(chatId){
         const messageRef = collection(db, 'chats', chatId, 'messages');
 
         try{
-            // setPending(true)
             dispach({type:ACTION_TYPES.FETCH_START})
             await addDoc(messageRef, {
                 text: newMessageText,

@@ -4,7 +4,7 @@ import { useEffect, useReducer, useState } from "react";
 import { db } from "../../firebaseinit";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
-import {  createImageUrl } from "../utils/createUpdateUtils";
+import {  createImageUrl } from "../utils/createImageUrl";
 import { checkData } from "../utils/formUtils";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
