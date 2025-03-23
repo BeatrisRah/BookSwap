@@ -21,9 +21,9 @@ export default function ChatsSection() {
     </div>
     
     return (
-        <div className="flex h-[55rem] no-scrollbar overflow-hidden">
+        <div className="flex h-[55rem] w-11/12 m-auto no-scrollbar overflow-hidden shadow-md rounded-md mb-6">
             {/* Sidebar */}
-            <div className="w-1/5 bg-white border-r border-gray-300">
+            <div className="w-1/5 bg-blue-50 border-r border-gray-300">
                 {/* Sidebar Header */}
                 <header className="p-4 border-b border-gray-300 flex justify-between items-center bg-blue-500 text-white">
                     <h1 className="text-2xl font-semibold">Chat Web</h1>
@@ -36,7 +36,7 @@ export default function ChatsSection() {
                     chats.map(c => 
                         <Link 
                         to={`/chats/${c.id}`} 
-                        className="flex items-center mb-4 hover:bg-gray-100 p-2 rounded-md"
+                        className="flex items-center mb-4 hover:bg-blue-100 p-2 rounded-md"
                         key={c.id}>
                             <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
                                 <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="w-12 h-12 rounded-full" />

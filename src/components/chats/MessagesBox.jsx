@@ -37,7 +37,7 @@ export default function MessagesBox({messages, currentChatDetails}) {
             
         </div>
         {/* Chat Input */}
-        <footer className="bg-white p-4 absolute bottom-0 w-3/4">
+        <footer className="bg-white p-4 absolute bottom-0 w-3/5">
             <div className="flex items-center">
                 <input 
                     type="text" 
