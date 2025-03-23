@@ -1,7 +1,9 @@
 import { addDoc, arrayUnion, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp, updateDoc, where } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import { db } from "../../firebaseinit"
 import { useNavigate } from "react-router"
+import fetchReducer from "../reducers/fetchReducer"
+import { ACTION_TYPES } from "../reducers/postActionTypes"
 
 export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerBook){
     const [pending, setPending] = useState(false)
@@ -82,11 +84,15 @@ export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerB
 }
 
 export function useFetchChats(userEmail, chatId){
-    const [chatsState, setChats] = useState(null)
-    const [pending, setPending] = useState(true)
     const [chatIdDefault, setChatIdDefault] = useState(null)
+    const [state, dispach] = useReducer(fetchReducer.reducer, {
+        pending: true,
+        data: null
+    })
 
     useEffect(() => {
+        let isCancelled = false;
+        
         const getAll = async () => {
             const chatsRef = collection(db, 'chats')
             const q = query(chatsRef, where('users', 'array-contains', userEmail))
@@ -94,24 +100,28 @@ export function useFetchChats(userEmail, chatId){
             const chatsDocs = await getDocs(q)
 
             if(chatsDocs.empty){
-                setChats([])
-                setPending(false)
+                dispach({type:ACTION_TYPES.FETCH_SUCCESS, data:[]})
                 return;
             }
 
             const chats = chatsDocs.docs.map(chatDoc => ({id:chatDoc.id, ...chatDoc.data()}))
-            setChats(chats)
-            setPending(false)
+            dispach({type:ACTION_TYPES.FETCH_SUCCESS, data:chats})
             if(chatId){
                 setChatIdDefault(chatId)
             } else{
                 setChatIdDefault(chats[0].id)
             }
         }
-        getAll()
+
+        if(!isCancelled){
+            getAll()
+        }
+        return () => {
+            isCancelled = true;
+        }
     }, [userEmail,chatId])
 
-    return [pending, chatsState, chatIdDefault]
+    return [state.pending, state.data, chatIdDefault]
 }
 
 export function useFetchMessages(chatId){
@@ -142,8 +152,12 @@ export function useFetchMessages(chatId){
 }
 
 export function useSendMessageHandler(chatId){
-    const [pending, setPending] = useState(false)
-    const [error, setError] = useState(null)
+    const [state, dispach] = useReducer(fetchReducer.reducer, {
+        pending: false,
+        error:null
+    })
+    // const [pending, setPending] = useState(false)
+    // const [error, setError] = useState(null)
 
     const sendMessage = async (newMessageText, userEmail) => {
         if(!newMessageText.trim()) return;
@@ -151,21 +165,21 @@ export function useSendMessageHandler(chatId){
         const messageRef = collection(db, 'chats', chatId, 'messages');
 
         try{
-            setPending(true)
+            // setPending(true)
+            dispach({type:ACTION_TYPES.FETCH_START})
             await addDoc(messageRef, {
                 text: newMessageText,
                 senderId: userEmail, 
                 isRead: false,
                 createdAt:serverTimestamp()
             })
-            setError(false)
 
         } catch(err){
-            setError(err.message)
+            dispach({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
         } finally {
-            setPending(false)
+            dispach({type:ACTION_TYPES.FETCH_FINAL})
         }
     }
 
-    return [sendMessage, pending, error]
+    return [sendMessage, state.pending, state.error]
 }
