@@ -12,9 +12,12 @@ export default function BookForm({
     return (
         <div className="h-full bg-gray-100 dark:bg-gray-900">
             <div className="mx-auto">
-                {error && <ErrorAlert error={error} />}
+                {error && 
+                    <div className="pt-2">
+                        <ErrorAlert error={error} />
+                    </div>}
                 {pending && <div className="loader m-auto"></div>}
-                <div className="flex justify-center px-6 py-12">
+                <div className="flex justify-center px-6">
                     <form onSubmit={submitHandler} className="flex w-full justify-center px-6 py-12">
                         <div className="w-full xl:w-3/4 lg:w-11/12 flex">
                             <div className="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
