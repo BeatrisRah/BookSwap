@@ -34,9 +34,8 @@ export default function ProductList({filter = {}}) {
 
     return (
     <>
-        <div className="bg-[url(/catalog_banner.png)] bg-cover bg-center w-full h-60">
+        {!filter.latest && <div className="bg-[url(/catalog_banner.png)] bg-cover bg-center w-full h-60"></div>}
 
-        </div>
         <section className="bg-white py-8 w-full m-auto">
             <div className="mx-auto flex items-center flex-wrap pb-12">
                 <nav id="store" className="w-full z-30 top-0 px-6 py-1">
