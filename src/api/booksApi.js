@@ -9,11 +9,6 @@ import { checkData } from "../utils/formUtils";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
 export function useCreateBook(){
-    // const [error, setError] = useState(null)
-    // const [newBook, setNewBook] = useState({})
-    // const [pending, setPending] = useState(false)
-
-
     const [state, dispatch] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
 
     const {user} = useAuth()
@@ -21,12 +16,10 @@ export function useCreateBook(){
 
     const formSubmit = async (e) => {
         e.preventDefault()
-        // setPending(true)
         dispatch({type:ACTION_TYPES.FETCH_START})
 
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries([...formData])
-        // setNewBook(data)
         dispatch({type:ACTION_TYPES.FETCH_CURRENT_DATA, data:data})
         try{
             checkData(data)
@@ -53,8 +46,6 @@ export function useCreateBook(){
             dispatch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
             return;
         } 
-        // setError(null)
-        // setNewBook({})
     }
 
 
@@ -68,8 +59,8 @@ export function useFetch( defaultState = [], filter ={}){
     // ** TYPE: ONE DOCUMENT OR ALL
 
     useEffect(() => {
+        let isCancelled = false
         setPending(true)
-        
         
         const getData = async () => {
             let q = collection(db, 'books')
@@ -103,9 +94,13 @@ export function useFetch( defaultState = [], filter ={}){
             return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
             
         }
-        getData().then(res => setState(res))
+        if(!isCancelled){
+            getData().then(res => setState(res))
+        }
         
-
+        return () => {
+            isCancelled = true
+        }
     }, [filter])
 
     return [pending, state]
@@ -119,16 +114,20 @@ export function useFetchOne(bookId){
 
 
     useEffect(() => {
+        let isCancelled = false;
         const getBook = async() => {
             try{
                 const bookRef = doc(db, 'books', bookId);
                 dispatch({type:ACTION_TYPES.FETCH_START})
 
-                const bookSnap = await getDoc(bookRef)
+                if(!isCancelled){
+                    const bookSnap = await getDoc(bookRef)
 
-                if (!bookSnap.exists()) throw new Error('Book doesnt exist!');
+                    if (!bookSnap.exists()) throw new Error('Book doesnt exist!');
 
-                dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:bookSnap.data()})
+                    dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:bookSnap.data()})
+                }
+                
             } catch(err){
                 dispatch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
             }
@@ -138,6 +137,10 @@ export function useFetchOne(bookId){
         };
 
         getBook()
+
+        return () => {
+            isCancelled = true
+        }
 
     }, [bookId])
 
