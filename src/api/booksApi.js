@@ -9,6 +9,8 @@ import { checkData } from "../utils/formUtils";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
 
+const HERO_SECTION_BOOOK_LIMIT = 4;
+
 
 export function useCreateBook(){
     const [state, dispatch] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
@@ -77,7 +79,7 @@ export function useFetch( defaultState = [], filter ={}){
             }
 
             if(filter?.latest){
-                q = query(q, orderBy('createdAt', 'desc'), limit(4))
+                q = query(q, orderBy('createdAt', 'desc'), limit(HERO_SECTION_BOOOK_LIMIT))
                 
             }else if (filter?.sortBy === "newest") {
                 q = query(q, orderBy("createdAt", "desc"));
