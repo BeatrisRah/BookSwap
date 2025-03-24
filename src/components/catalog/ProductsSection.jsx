@@ -39,10 +39,12 @@ export default function ProductList({filter = {}}) {
         <section className="bg-white py-8 w-full m-auto">
             <div className="mx-auto flex items-center flex-wrap pb-12">
                 <nav id="store" className="w-full z-30 top-0 px-6 py-1">
-                    <div className="w-11/12 mx-auto flex flex-wrap items-center md:justify-center lg:justify-between mt-0 px-2 py-3 ">
-                        <div
-                            className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
-                        >
+                    <div className={`mx-auto flex flex-wrap items-center md:justify-center lg:justify-between mt-0 px-2 py-3 ${
+                        filter.latest ? 
+                        'w-11/12' :
+                        'w-10/12'
+                    }`}>
+                        <div className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl">
                             
                             {filter.latest ? 'Recently Added': ''}
                         </div>
@@ -98,7 +100,7 @@ export default function ProductList({filter = {}}) {
                 </nav>
                 <div className="w-11/12 flex m-auto">
                     {!filter.latest && <Sidebar handleFilterChange={handleFilterChange} />}
-                    <div className="w-10/12 p-6 flex flex-row justify-center gap-4 flex-wrap lg:justify-start">
+                    <div className="w-10/12 p-6 flex flex-row justify-center gap-4 flex-wrap md:w-full lg:justify-start">
                         
                         {pending ? <div className="loader m-auto"></div> : 
                         bookList.map(el => <Product book={el} key={el.id} />)}
