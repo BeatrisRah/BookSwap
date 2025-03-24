@@ -9,7 +9,7 @@ import { checkData } from "../utils/formUtils";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
 
-const HERO_SECTION_BOOOK_LIMIT = 4;
+const HERO_SECTION_BOOOK_LIMIT = 5;
 
 
 export function useCreateBook(){
