@@ -24,12 +24,16 @@ export default function UserProfile() {
             </div>
             <div className="h-4/5 bg-gray-200 pb-10">
                 <div className="w-11/12 m-auto pt-25">
-                    <h1 className="text-xl text-center text-gray-700 mb-5">{user.email}</h1>
+                    <h1 className="text-xl text-center text-gray-700 mb-10">{user.email}</h1>
                     
-                    <h2 className="text-center font-bold p-4 bg-gray-300 text-2xl capitalize">Your book offers</h2>
-                    <div className="bg-gray-100 w-full flex flex-wrap rounded-b-md gap-2 p-6 border-4 border-gray-300 shadow-md">
+                    <h2 className="w-10/12 m-auto text-center font-bold p-4 bg-gray-300 text-2xl capitalize">Your book offers</h2>
+                    <div className="bg-gray-100 w-10/12 m-auto rounded-b-md  border-4 border-gray-300 shadow-md">
                         {pending && <p>Loading...</p>}
-                        {books.map(b => <Product book={b} key={b.id} /> )}
+                        <div className="flex flex-wrap gap-2 m-auto w-11/12 p-2 pt-4 pb-4">
+                            {books.map(b => <Product book={b} key={b.id} /> )}
+
+                        </div>
+                        
                     </div>
 
                 </div>
