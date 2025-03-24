@@ -3,7 +3,7 @@ import { Link } from "react-router";
 export default function Product({ book }) {
     return (
 
-        <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+        <div className="group flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
             <Link className="relative flex h-90 overflow-hidden" to={`/books/${book.id}/details`}>
                 <img className="absolute top-0 right-0 h-full w-full object-fit" src={book.imageUrl} alt="product image" />
             </Link>

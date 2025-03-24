@@ -15,6 +15,7 @@ import TradeSection from './components/trade/TradeSection.jsx'
 import AuthGuard from './guards/AuthGuard.jsx'
 import GuestGuard from './guards/GuestGuard.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
+import UserProfile from './components/profile/UserProfile.jsx'
 
 export default function App() {    
     return (
@@ -34,6 +35,7 @@ export default function App() {
 
                 <Route element={<AuthGuard />}>
                     <Route path='/logout' element={<Logout />} />
+                    <Route path='/user' element={<UserProfile />} />
                     <Route path='/chats' element={<ChatsSection />} />
                     <Route path='/chats/:chatId' element={<ChatsSection />} />
                     <Route path='/books/create' element={<CreateSection />} />
