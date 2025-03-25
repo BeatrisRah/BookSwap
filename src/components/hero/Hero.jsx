@@ -32,8 +32,7 @@ function Hero() {
 			</div>
 
 			<p className="w-11/12 m-auto text-gray-500 text-center p-3 border-gray-400 lg:mb-8 md:text-lg lg:text-2xl dark:text-gray-400">
-			Find your next great read, declutter your shelves,<br /> 
-			or give books a second life—join our community of book lovers today!
+			Find your next great read, declutter your shelves, or give books a second life<br /> —join our community of book lovers today!
             </p>
 
 			<section className="flex m-auto w-3/5 mt-5 mb-48 items-center">
@@ -54,7 +53,74 @@ function Hero() {
 					</div>
 			</section>
 
-			
+			<section className="bg-blue-50 py-12 mb-48 sm:py-16 lg:py-20 xl:py-24">
+				<div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+					<div className="text-center">
+					<p className="text-sm font-bold uppercase tracking-widest text-gray-700">How It Works?</p>
+					<h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+						Selling & Trading Books Made Easy
+					</h2>
+
+					</div>
+					<ul className="mx-auto mt-12 grid w-10/12 grid-cols-1 gap-10 sm:mt-16 lg:mt-20 lg:grid-cols-5">
+						<li className="flex-start group relative flex lg:flex-col">
+							<svg className="w-15" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xmlSpace="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth={0} /><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" /><g id="SVGRepo_iconCarrier"> <circle style={{fill: 'none', stroke: '#000000', strokeWidth: 2, strokeMiterlimit: 10}} cx={14} cy={11} r={6} /> <path style={{fill: 'none', stroke: '#000000', strokeWidth: 2, strokeMiterlimit: 10}} d="M5,26c0-4.971,4.029-9,9-9 c1.864,0,3.596,0.567,5.032,1.537" /> <circle style={{fill: 'none', stroke: '#000000', strokeWidth: 2, strokeMiterlimit: 10}} cx={24} cy={24} r={7} /> <line style={{fill: 'none', stroke: '#000000', strokeWidth: 2, strokeMiterlimit: 10}} x1={24} y1={28} x2={24} y2={20} /> <line style={{fill: 'none', stroke: '#000000', strokeWidth: 2, strokeMiterlimit: 10}} x1={20} y1={24} x2={28} y2={24} /> </g></svg>
+							<div className="ml-6 lg:ml-0 lg:mt-8">
+								<h3 className="text-xl font-bold text-gray-900 before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500">
+									Create an Account
+								</h3>
+								<h4 className="mt-2 text-base text-gray-700">Sign up for free and set up your profile.</h4>
+							</div>
+						</li>
+
+						<li className="flex-start group relative flex lg:flex-col">
+							<svg className="w-15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth={0} /><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" /><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /> <path d="M12 16V3M12 3L16 7.375M12 3L8 7.375" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /> </g></svg>
+
+							<div className="ml-6 lg:ml-0 lg:mt-8">
+								<h3 className="text-xl font-bold text-gray-900 before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500">
+									List Your Book
+								</h3>
+								<h4 className="mt-2 text-base text-gray-700">Upload book details, set a price, or mark it as available for donation.</h4>
+							</div>
+						</li>
+
+						<li className="flex-start group relative flex lg:flex-col">
+							<svg className="w-15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth={0} /><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" /><g id="SVGRepo_iconCarrier"> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="#1C274C" strokeWidth="1.5" /> </g></svg>
+
+							<div className="ml-6 lg:ml-0 lg:mt-7">
+								<h3 className="text-xl font-bold text-gray-900 before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500">
+									Connect with Buyers & Traders
+								</h3>
+								<h4 className="mt-2 text-base text-gray-700">Chat securely with potential buyers or traders.</h4>
+							</div>
+						</li>
+
+						<li className="flex-start group relative flex lg:flex-col">
+							<svg className="w-17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.50626 15.2647C7.61657 15.6639 8.02965 15.8982 8.4289 15.7879C8.82816 15.6776 9.06241 15.2645 8.9521 14.8652L7.50626 15.2647ZM6.07692 7.27442L6.79984 7.0747V7.0747L6.07692 7.27442ZM4.7037 5.91995L4.50319 6.64265L4.7037 5.91995ZM3.20051 4.72457C2.80138 4.61383 2.38804 4.84762 2.2773 5.24675C2.16656 5.64589 2.40035 6.05923 2.79949 6.16997L3.20051 4.72457ZM20.1886 15.7254C20.5895 15.6213 20.8301 15.2118 20.7259 14.8109C20.6217 14.41 20.2123 14.1695 19.8114 14.2737L20.1886 15.7254ZM10.1978 17.5588C10.5074 18.6795 9.82778 19.8618 8.62389 20.1747L9.00118 21.6265C10.9782 21.1127 12.1863 19.1239 11.6436 17.1594L10.1978 17.5588ZM8.62389 20.1747C7.41216 20.4896 6.19622 19.7863 5.88401 18.6562L4.43817 19.0556C4.97829 21.0107 7.03196 22.1383 9.00118 21.6265L8.62389 20.1747ZM5.88401 18.6562C5.57441 17.5355 6.254 16.3532 7.4579 16.0403L7.08061 14.5885C5.10356 15.1023 3.89544 17.0911 4.43817 19.0556L5.88401 18.6562ZM7.4579 16.0403C8.66962 15.7254 9.88556 16.4287 10.1978 17.5588L11.6436 17.1594C11.1035 15.2043 9.04982 14.0768 7.08061 14.5885L7.4579 16.0403ZM8.9521 14.8652L6.79984 7.0747L5.354 7.47414L7.50626 15.2647L8.9521 14.8652ZM4.90421 5.19725L3.20051 4.72457L2.79949 6.16997L4.50319 6.64265L4.90421 5.19725ZM6.79984 7.0747C6.54671 6.15847 5.8211 5.45164 4.90421 5.19725L4.50319 6.64265C4.92878 6.76073 5.24573 7.08223 5.354 7.47414L6.79984 7.0747ZM11.1093 18.085L20.1886 15.7254L19.8114 14.2737L10.732 16.6332L11.1093 18.085Z" fill="#1C274C"></path> <path d="M19.1647 6.2358C18.6797 4.48023 18.4372 3.60244 17.7242 3.20319C17.0113 2.80394 16.1062 3.03915 14.2962 3.50955L12.3763 4.00849C10.5662 4.47889 9.66119 4.71409 9.24954 5.40562C8.8379 6.09714 9.0804 6.97492 9.56541 8.73049L10.0798 10.5926C10.5648 12.3481 10.8073 13.2259 11.5203 13.6252C12.2333 14.0244 13.1384 13.7892 14.9484 13.3188L16.8683 12.8199C18.6784 12.3495 19.5834 12.1143 19.995 11.4227C20.2212 11.0429 20.2499 10.6069 20.1495 10" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round"></path> </g></svg>
+							<div className="ml-6 lg:ml-0 lg:mt-5">
+								<h3 className="text-xl font-bold text-gray-900 before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500">
+									Ship or Meet Up
+								</h3>
+								<h4 className="mt-2 text-base text-gray-700">Choose a delivery method or arrange a local pickup.</h4>
+							</div>
+						</li>
+
+						<li className="flex-start group relative flex lg:flex-col">
+							<svg className="w-17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="9.5" stroke="#222222" strokeLinecap="round"></circle> <path d="M9.83494 13.25C10.0544 13.63 10.37 13.9456 10.75 14.1651C11.13 14.3845 11.5612 14.5 12 14.5C12.4388 14.5 12.87 14.3845 13.25 14.1651C13.63 13.9456 13.9456 13.63 14.1651 13.25" stroke="#222222" strokeLinecap="round"></path> <rect x="7" y="8" width="3" height="2" rx="1" fill="#222222"></rect> <rect x="14" y="8" width="3" height="2" rx="1" fill="#222222"></rect> </g></svg>
+							<div className="ml-6 lg:ml-0 lg:mt-5">
+								<h3 className="text-xl font-bold text-gray-900 before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500">
+									Enjoy & Repeat!
+								</h3>
+								<h4 className="mt-2 text-base text-gray-700">Find new books while giving your old ones a second home.</h4>
+							</div>
+						</li>
+					
+					</ul>
+				</div>
+			</section>
+
+
+			<h1 className="text-center text-3xl font-bold tracking-wider">Our Newest Additions</h1>
 			<ProductList filter={{latest:true}} />
 			
 		</>

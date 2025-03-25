@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getCountFromServer, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
 
 import { db } from "../../firebaseinit";
@@ -10,6 +10,7 @@ import { ACTION_TYPES } from "../reducers/postActionTypes";
 import fetchReducer from "../reducers/fetchReducer";
 
 const HERO_SECTION_BOOOK_LIMIT = 5;
+const CATALOG_SECTION_LIMIT = 8;
 
 
 export function useCreateBook(){
@@ -61,6 +62,9 @@ export function useFetch( defaultState = [], filter ={}){
         data: defaultState,
         pending: true,
     })
+    const [lastDoc, setLastDoc] = useState(null)
+    const [totalPages, setTotalPages] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
 
 
     useEffect(() => {
@@ -78,10 +82,10 @@ export function useFetch( defaultState = [], filter ={}){
                 q = query(q, where('genre', '==', formattedFilter))
             }
 
-            if(filter?.latest){
-                q = query(q, orderBy('createdAt', 'desc'), limit(HERO_SECTION_BOOOK_LIMIT))
-                
-            }else if (filter?.sortBy === "newest") {
+            const snapShotCount = await getCountFromServer(q)            
+            setTotalPages(Math.ceil(snapShotCount.data().count / CATALOG_SECTION_LIMIT))
+
+            if (filter?.sortBy === "newest") {
                 q = query(q, orderBy("createdAt", "desc"));
 
             } else if (filter?.sortBy === "price-high") {
@@ -91,14 +95,38 @@ export function useFetch( defaultState = [], filter ={}){
                 q = query(q, orderBy("price", "asc"), orderBy("__name__"));
             }
 
-            
+            if(!filter?.byOwnerId || !filter.latest){
+                
+                const pageNumber = Number(filter.page)
+                if(pageNumber > 1){
+                    setCurrentPage(pageNumber)
+                    q = query(q, startAfter(lastDoc), limit(CATALOG_SECTION_LIMIT))
+                } else {
+                    setCurrentPage(1)
+                    q = query(q, limit(CATALOG_SECTION_LIMIT))
+                }
+            }
 
+            if(filter?.latest){
+                q = query(q, orderBy('createdAt', 'desc'), limit(HERO_SECTION_BOOOK_LIMIT))
+
+            }
             const querySnapShot = await getDocs(q);
-            return querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
+            
+            
+            if(!querySnapShot.empty) {
+                setLastDoc(querySnapShot.docs[querySnapShot.docs.length -1])
+                const res = querySnapShot.docs.map((doc) => ({id:doc.id, ...doc.data()}))
+                dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:res})
+            } else{
+                dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:[]})
+                setTotalPages(1)
+            }
+
             
         }
         if(!isCancelled){
-            getData().then(res => dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:res}))
+            getData()
         }
         
         return () => {
@@ -106,8 +134,10 @@ export function useFetch( defaultState = [], filter ={}){
         }
     }, [filter])
 
-    return [state.pending, state.data]
+    return [state.pending, state.data, currentPage, totalPages]
 }
+
+
 
 export function useFetchOne(bookId){
 

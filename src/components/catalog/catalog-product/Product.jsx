@@ -4,12 +4,12 @@ export default function Product({ book }) {
     return (
 
         <Link to={`/books/${book.id}/details`} className="w-full max-w-xs bg-white custom-shadow-xs flex flex-col justify-items-center rounded-md p-4">
-            <Link className="w-full h-4/6" to={`/books/${book.id}/details`}>
+            <div className="w-full h-4/6" to={`/books/${book.id}/details`}>
                 <img 
                     src={book.imageUrl} 
                     alt={`${book.title} cover`}
                     className="w-full h-full m-auto rounded-md custom-shadow-smaller" />
-            </Link>
+            </div>
             <div className="my-4 p-2 flex flex-col h-1/6">
                 <h2 className="text-sm text-gray-500 italic">Posted By: {book.ownerEmail}</h2>
                 <h1 className="text-xl text-black font-bold mt-2">{book.title}</h1>

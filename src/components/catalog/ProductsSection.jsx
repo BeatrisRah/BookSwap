@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Product from "./catalog-product/Product";
-import { useSearchParams } from "react-router";
+import {  useSearchParams } from "react-router";
 import { useFetch } from "../../api/booksApi";
 import Sidebar from "./SideBar";
+import PaginationCatalog from "./PaginationCatalog";
 
-export default function ProductList({filter = {}}) {
+function ProductList({filter = {}}) {
     const [defaultFilter, setFaultFilter] = useState(filter)
-    const [pending, bookList] = useFetch([], defaultFilter)
+    const [pending, bookList, currentPage, pages] = useFetch([], defaultFilter)
 
     const [isOpen, setIsOpen ] = useState(false)
-    const [searchParams, setSearchParams] = useSearchParams()
-    
+    const [searchParams, setSearchParams] = useSearchParams();
 
 
     const filters = [
@@ -49,7 +49,7 @@ export default function ProductList({filter = {}}) {
                             <div className="relative">
                                 <input
                                     type="text"
-                                    className="h-10 w-96 pr-5 pl-5 rounded-full z-0 border-2 focus:shadow focus:outline-none"
+                                    className="h-10 w-96 pr-5 pl-5 rounded-full z-0 border-2 focus:shadow-md focus:outline-none"
                                     placeholder="Search anything..."
                                 />
                             </div>}
@@ -113,11 +113,15 @@ export default function ProductList({filter = {}}) {
                         
                         {pending ? <div className="loader m-auto"></div> : 
                         bookList.map(el => <Product book={el} key={el.id} />)}
-                        
+                        {!pending && bookList.length === 0 && <p>No books</p>}
                     </div>
                 </div>
+
             </div>
+            {!filter.latest && <PaginationCatalog pages={pages} currentPage={currentPage} handleFilterChange={handleFilterChange} />}
         </section>
     </>
     );
 }
+
+export default memo(ProductList)
