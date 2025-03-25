@@ -15,7 +15,7 @@ export default function PaginationCatalog({pages, currentPage, handleFilterChang
                     <button 
                         className={`rounded-lg border border-blue-500 px-4 py-2 
                             ${i + 1 === currentPage ? 
-                                "bg-blue-500 text-white":
+                                "!bg-[#2c9bb0] text-white":
                                 "text-gray-700"
                             }`}
                         onClick={() =>handleFilterChange(i +1, 'page')}>{i +1}

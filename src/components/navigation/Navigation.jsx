@@ -13,69 +13,39 @@ export default function Navigation() {
     }, [location.pathname])
 
     return (
-        <nav className="w-full z-30 top-0 py-1">
-            <div className="w-11/12 mx-auto flex flex-wrap items-center justify-between mt-0 px-4 py-3">
-                <label htmlFor="menu-toggle" className="cursor-pointer md:hidden block">
-                    <svg
-                        className="fill-current text-gray-900"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                    >
-                        <title>menu</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                    </svg>
-                </label>
-                <input className="hidden" type="checkbox" id="menu-toggle" />
+        <header className="bg-white w-11/12 m-auto">
+            <div className="mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                    <div className="flex-1 md:flex md:items-center md:gap-12">
+                        <Link className="inline-flex items-center text-teal-600" to='/' >
+                            <span className="sr-only">Home</span>
+                            <img src="/BookSwapLogo.png" className="w-12" />
+                            <p className="text-lg font-bold text-gray-400">ookSwap</p>
+                        </Link>
+                    </div>
 
-                <div
-                    className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1"
-                    id="menu"
-                >
-                    <nav>
-                        <ul className="md:flex items-center gap-1 justify-between text-base text-gray-700 pt-4 md:pt-0">
-                            <li>
-                                <Link
-                                    className="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                                    to="/books"
-                                >
-                                    Books
-                                </Link>
-                            </li>
-                            {user && (
+                    <div className="md:flex md:items-center md:gap-12">
+                        <nav aria-label="Global" className="hidden md:block">
+                            <ul className="flex items-center gap-6 text-sm">
                                 <li>
-                                    <Link
-                                        className="inline-block border-2 rounded-md border-blue-400 no-underline text-blue-400 hover:text-black hover:underline py-2 px-4"
-                                        to="/books/create"
-                                    >
-                                        Create Offer
-                                    </Link>
+                                    <Link className="text-gray-500 transition hover:text-gray-500/75" to='/books'> Books </Link>
                                 </li>
-                            )}
-                        </ul>
-                    </nav>
-                </div>
+                                
+                            </ul>
+                        </nav>
 
-                <div className="order-1 md:order-2">
-                    <Link
-                        className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
-                        to="/"
-                    >
-                        <img src="/BookSwapLogo.png" className="w-10" />
-                        OOKSWAP
-                    </Link>
-                </div>
-
-                <div className="order-2 md:order-3 flex items-center" id="nav-content">
-                    {/* USER */}
-                    {user && (
-                        <>  
-                            <p className="mr-2">{user?.email}</p>
-                            <button
-                                className="inline-block no-underline hover:text-black"
-                                onClick={() => setIsOpen(o => !o)}
-                            >
+                        <div className="flex items-center gap-4">
+                            {user ? 
+                            <div className="sm:flex sm:gap-4">
+                            <Link
+                                    className="rounded-md bg-blue-500 px-5 py-2.5 text-sm font-medium text-white shadow"
+                                    to='/books/create'
+                                >
+                                    Create Offer
+                                </Link>
+                            <button 
+                            className="p-2"
+                            onClick={() => setIsOpen(o => !o)}>
                                 <svg
                                     className="fill-current hover:text-black"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -87,6 +57,26 @@ export default function Navigation() {
                                     <path d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z" />
                                 </svg>
                             </button>
+                            </div> :
+                            <>
+                            <div className="sm:flex sm:gap-4">
+                                <Link
+                                    className="rounded-md bg-blue-500 px-5 py-2.5 text-sm font-medium text-white shadow"
+                                    to='/login'
+                                >
+                                    Login
+                                </Link>
+                            </div>
+
+                            <div className="hidden sm:flex">
+                                <Link
+                                    className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+                                    to='/register'
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                            </>}
                             
                             {isOpen && 
                             <div className="absolute right-5 z-50 top-20 flex w-60 flex-col bg-gray-100 py-1 px-4 text-gray-800 shadow-xl group-hover:visible">
@@ -106,36 +96,26 @@ export default function Navigation() {
                                 Logout
                                 </Link>
                             </div>}
-                        </>
-                    )}
+                        </div>
+                        
 
-                    {/* GUEST */}
-                    {!user && (
-                        <>
-                            <Link
-                                className="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                                to="/register"
-                            >
-                                Register
-                            </Link>
-                            <Link
-                                className="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                                to="/login"
-                            >
-                                Login
-                            </Link>
-                        </>
-                    )}
-
-                    {/* <Link
-                        className="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                        to="/about"
-                    >
-                        About
-                    </Link> */}
+                            <div className="block md:hidden">
+                                <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-            </div>
-        </nav>
+        </header>
     );
 }
