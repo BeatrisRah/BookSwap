@@ -82,6 +82,10 @@ export function useFetch( defaultState = [], filter ={}){
                 q = query(q, where('genre', '==', formattedFilter))
             }
 
+            if(filter?.title && filter?.title !== ''){
+                q = query(q, where('title', '==', filter.title ))
+            }
+
             const snapShotCount = await getCountFromServer(q)            
             setTotalPages(Math.ceil(snapShotCount.data().count / CATALOG_SECTION_LIMIT))
 

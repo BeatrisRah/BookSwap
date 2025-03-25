@@ -7,10 +7,12 @@ import PaginationCatalog from "./PaginationCatalog";
 
 function ProductList({filter = {}}) {
     const [defaultFilter, setFaultFilter] = useState(filter)
-    const [pending, bookList, currentPage, pages] = useFetch([], defaultFilter)
-
     const [isOpen, setIsOpen ] = useState(false)
+    const [inputVal, setInputVal] = useState('')
+
+    const [pending, bookList, currentPage, pages] = useFetch([], defaultFilter)
     const [searchParams, setSearchParams] = useSearchParams();
+
 
 
     const filters = [
@@ -44,67 +46,71 @@ function ProductList({filter = {}}) {
                         'w-11/12' :
                         'w-10/12'
                     }`}>
+                        
+                        
+
+                        {filter.latest ? '' :
+                        <>
                         <div className="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl">
-                            {!filter.latest &&
+                            
                             <div className="relative">
                                 <input
                                     type="text"
                                     className="h-10 w-96 pr-5 pl-5 rounded-full z-0 border-2 focus:shadow-md focus:outline-none"
-                                    placeholder="Search anything..."
+                                    placeholder="Search titles..."
+                                    value={inputVal}
+                                    onChange={(e) => setInputVal(e.currentTarget.value)}
                                 />
-                            </div>}
+                            </div>
                             
                             
-                        </div>
-                        
-
-                        {filter.latest ? '' : 
-                        <div className="flex items-center" id="store-nav-content">
-                            <div className="relative">
-                                <a
-                                    className="pl-3 inline-block no-underline hover:text-black"
-                                    href="#"
-                                >
-                                    <svg
-                                        className="fill-current hover:text-black"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z" />
-                                    </svg>
-                                </a>
-                                <button 
-                                    className="pl-3 inline-block no-underline hover:text-black"
-                                    onClick={() => setIsOpen(!isOpen)}
-                                >
-                                    <svg
-                                        className="fill-current hover:text-black"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
-                                    </svg>
-                                </button>
-                                
-                                {isOpen && 
-                                    (<div className="absolute mt-2 w-48 bg-white border rounded-md shadow-lg" >
-                                        {filters.map(f => (
-                                            <button 
-                                            key={f.value} 
-                                            className="block w-full text-left px-4 py-2 hover:bg-gray-200"
-                                            onClick={() => handleFilterChange(f.value, 'sortBy')}
+                            </div>
+                                <div className="flex items-center" id="store-nav-content">
+                                    <div className="relative">
+                                        <button
+                                            className="pl-3 inline-block no-underline hover:text-black"
+                                            onClick={() => handleFilterChange(inputVal, 'title')}
+                                        >
+                                            <svg
+                                                className="fill-current hover:text-black"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
                                             >
-                                            {f.name}
-                                            </button>
-                                        ))}
-                                    </div>)}
+                                                <path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z" />
+                                            </svg>
+                                        </button>
+                                        <button 
+                                            className="pl-3 inline-block no-underline hover:text-black"
+                                            onClick={() => setIsOpen(!isOpen)}
+                                        >
+                                            <svg
+                                                className="fill-current hover:text-black"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
+                                            </svg>
+                                        </button>
+                                        
+                                        {isOpen && 
+                                            (<div className="absolute mt-2 w-48 bg-white border rounded-md shadow-lg" >
+                                                {filters.map(f => (
+                                                    <button 
+                                                    key={f.value} 
+                                                    className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                                                    onClick={() => handleFilterChange(f.value, 'sortBy')}
+                                                    >
+                                                    {f.name}
+                                                    </button>
+                                                ))}
+                                            </div>)}
                             </div>
 
-                        </div>}
+                        </div></>}
                     </div>
                 </nav>
                 <div className="w-11/12 flex m-auto">
