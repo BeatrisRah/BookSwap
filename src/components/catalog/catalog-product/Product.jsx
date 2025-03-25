@@ -15,7 +15,7 @@ export default function Product({ book }) {
                 <h1 className="text-xl text-black font-bold mt-2">{book.title}</h1>
                 <h2 className="text-gray-500">{book.author}</h2>
             </div>
-            <h1 className="px-2 font-bold text-3xl">${book.price}</h1>
+            <h1 className="px-2 font-bold text-gray-700 text-3xl">${book.price}</h1>
         </Link>
     );
 }

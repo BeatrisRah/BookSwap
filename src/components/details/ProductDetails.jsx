@@ -48,7 +48,7 @@ export default function ProductDetails() {
                     <div className="md:flex-1 h-1/2 px-4 py-2 bg-white rounded-md">
 
                         <h2 className="text-4xl font-bold text-gray-800 dark:text-white mt-5 mb-2">{book.title}</h2>
-                        <p className="text-gray-600 dark:text-gray-300 text-md mb-4">
+                        <p className="text-gray-600 text-md mb-4">
                             {book.author}
                         </p>
                         {/* <div className="flex mb-4">
