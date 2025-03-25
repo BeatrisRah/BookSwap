@@ -78,3 +78,11 @@
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
+
+.custom-shadow-smaller{
+  box-shadow: -5px 4px 20px -4px #818181;
+}
+
+.custom-shadow-xs{
+  box-shadow: -5px 4px 20px -4px #acacac;
+}
