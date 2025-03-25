@@ -8,8 +8,9 @@ export default function EditProduct() {
     const {bookId} = useParams()
     const [book, pending, error] = useFetchOne(bookId)
     const [fomrSumbit, handleImageChange, imagePreview] = useEdit(book.imageUrl, bookId)
+    
 
-    if(book.owner !== user.uid){
+    if(book.owner && book.owner !== user.uid){
         return <Navigate to='/404' />
     }
 
