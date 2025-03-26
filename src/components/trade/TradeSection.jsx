@@ -25,20 +25,20 @@ export default function TradeSection() {
                 <div className="w-1/3 p-12 rounded-md">
                     <img src={book.imageUrl} className="w-full rounded-md custom-shadow" />
                     <div className="py-3">
-                        <h1 className="text-3xl text-black mb-2">{book.title}</h1>
-                        <p>{book.author}</p>
-                        
+                        <h1 className="text-3xl text-gray-800 mb-2 font-semibold">{book.title}</h1>
+                        <p className="text-lg">{book.author}</p>
+                        <h1 className="text-2xl text-gray-800 mb-2 font-semibold">${book.price}</h1>
                     </div>
                 </div>
                 <div className="w-2/3 p-10 rounded-md bg-white">
-                    <h1 className="text-4xl font-semibold text-gray-700 mb-10">Trade For:</h1>
+                    <h1 className="text-4xl font-semibold text-gray-700 mb-10">Trade With:</h1>
                     <div className="flex gap-2">
                         {pending && <div className="loader m-auto"></div>}
                         {isBookList ? 
                         (usersBooks.map(book => 
                         <div 
                             key={book.id} 
-                            className={`w-60 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl ${
+                            className={`w-60 bg-white shadow-md rounded-md duration-500 hover:scale-105 hover:shadow-xl ${
                                 selectedBook === book ? 
                                 'border-4 border-blue-500 rounded-md':
                                 ''
@@ -46,7 +46,7 @@ export default function TradeSection() {
                             onClick={() => setSelectedBook(book)}
                             >
                             <div>
-                                <img src={book.imageUrl} alt="Product" className="h-60 w-full object-cover rounded-t-md" />
+                                <img src={book.imageUrl} alt="Product" className="h-60 w-full object-cover object-top rounded-t-sm" />
                                 <div className="px-4 py-3 w-72">
                                 <p className="text-lg font-bold w-10/12 text-black truncate block capitalize">{book.title}</p>
                                 <div className="flex items-center">
