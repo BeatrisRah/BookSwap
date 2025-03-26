@@ -15,7 +15,7 @@ export default function ProductDetails() {
     const [book, pending, error, deleteBookHanlder] = useFetchOne(bookId)
     const [deleteModalShow, setDelteModalShow] = useState(false)
 
-    const [onBuyHandler, buyuPending, buyError] = useChatRoomCreate(user.email, null, book.ownerEmail, book, 'BUY')
+    const [onBuyHandler, buyuPending, buyError] = useChatRoomCreate(user?.email, null, book.ownerEmail, book, 'BUY')
 
     const isOwner = book.owner === user?.uid;
 
