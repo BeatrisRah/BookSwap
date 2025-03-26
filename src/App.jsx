@@ -26,6 +26,7 @@ export default function App() {
                 <Route path='/' element={<Hero />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/books' element={<ProductList filter={{}} />} />
+                <Route path='/books/:bookId/details' element={<ProductDetails />} />
 
                 <Route element={<GuestGuard />}>
                     <Route path='/register' element={<Register />} />
@@ -39,7 +40,6 @@ export default function App() {
                     <Route path='/chats' element={<ChatsSection />} />
                     <Route path='/chats/:chatId' element={<ChatsSection />} />
                     <Route path='/books/create' element={<CreateSection />} />
-                    <Route path='/books/:bookId/details' element={<ProductDetails />} />
                     <Route path='/books/:bookId/edit' element={<EditProduct />} />
                     <Route path='/books/:bookId/trade' element={<TradeSection />} />
                 </Route>

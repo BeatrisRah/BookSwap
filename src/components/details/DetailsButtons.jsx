@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 
-export default function DetailsButtons({isOwner, bookId, openDelete}) {
+export default function DetailsButtons({isOwner, bookId, openDelete, onBuyHandler, pending}) {
     const navigate = useNavigate()
 
     return (
@@ -33,6 +33,8 @@ export default function DetailsButtons({isOwner, bookId, openDelete}) {
             <div className="w-1/2 px-2">
                 <button 
                 className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600"
+                onClick={onBuyHandler}
+                disabled={pending}
                 >Buy</button>
             </div>
         </div>}

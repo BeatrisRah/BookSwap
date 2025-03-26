@@ -5,82 +5,115 @@ import { useNavigate } from "react-router"
 import fetchReducer from "../reducers/fetchReducer"
 import { ACTION_TYPES } from "../reducers/postActionTypes"
 
-export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerBook){
-    const [pending, setPending] = useState(false)
-    const [error, setError] = useState(null)
+export function useChatRoomCreate(offeringUser, offeringUserBook,  owner, ownerBook, type){
+    const [state, dispach] = useReducer(fetchReducer.reducer, {
+        pending: false,
+        error: null
+    })
     const navigate = useNavigate()
 
-
     const onTradeHandler = async() => {
-        
-
         try{
-            if(!offeringUserBook) throw new Error('Please select a book!')
+            if(!offeringUserBook && type ==='TRADE') throw new Error('Please select a book!')
             
-            setPending(true)
+            dispach({type:ACTION_TYPES.FETCH_START})
             const chatRef = collection(db, 'chats');
 
-            const chatParticipants = [offeringUser, owner].sort(); 
 
-            const q = query(chatRef, where('users', 'array-contains-any', chatParticipants))
+            const q = query(chatRef,  where('users', 'array-contains', offeringUser))
             const querySnapShot  = await getDocs(q)
 
-            let chatId = null;
+            const matchingChats = querySnapShot.docs.filter(doc => {
+                const users = doc.data().users;
+                return users.includes(owner); 
+            });
             
 
-            if(querySnapShot.empty){
+            let chatId = null;
+
+            if(matchingChats.length === 0){
                 //if no chat exists
+                const bookOffersIds = [
+                    ...(type === 'TRADE' ? [offeringUserBook?.id] : []), 
+                    ownerBook.id
+                ];
+                
                 const newChatRef = await addDoc(chatRef, {
                     users:[offeringUser, owner],
-                    bookOffersIds:[
-                        offeringUserBook.id,
-                        ownerBook.id]
+                    bookOffersIds
                 })
                 chatId = newChatRef.id
+
             } else{
                 //if it does check if the offer was alredy made
-                const currentbooks = querySnapShot.docs[0].data().bookOffersIds;
-                if(currentbooks.includes(offeringUserBook.id) || currentbooks.includes(ownerBook.id)){
+                const currentbooks = matchingChats[0].data().bookOffersIds;
+
+                if(currentbooks.includes(offeringUserBook?.id) || currentbooks.includes(ownerBook.id)){
                     throw new Error('This offer was alredy made!')
                 }
 
-                chatId = querySnapShot.docs[0].id
+                chatId = matchingChats[0].id;
+
+                const newBookArray = [
+                    ...(type === 'TRADE' ? [offeringUserBook?.id] : []), 
+                    ownerBook.id
+                ];
                 
-                await updateDoc(querySnapShot.docs[0].ref, {bookOffersIds: arrayUnion(offeringUserBook.id, ownerBook.id)})
+                await updateDoc(matchingChats[0].ref, {
+                    bookOffersIds: arrayUnion(...newBookArray)})
             }
 
             
-            const messagesRef = collection(db, "chats", chatId, "messages");
+            await createOfferMessage(type, chatId, {offeringUser, offeringUserBook, ownerBook})
 
-            await addDoc(messagesRef, {
-                senderId: offeringUser,
-                text: `Hey, I’d like to trade my "${offeringUserBook.title}" book for your "${ownerBook.title}" book. Waiting to hear from you!`,
-                tradeOfferDetails: {
-                    offeredBook: {
-                        id: offeringUserBook.id,
-                        title: offeringUserBook.title,
-                        imageUrl: offeringUserBook.imageUrl
-                },
-                    requestedBook: {
-                        id: ownerBook.id,
-                        title: ownerBook.title,
-                        imageUrl: ownerBook.imageUrl
-                }
-                },
-                createdAt: serverTimestamp(),
-                isRead: false
-            });
-
-            setError(false)
+            dispach({type:ACTION_TYPES.FETCH_FINAL})
             navigate(`/chats/${chatId}`)
 
         } catch(err){
-            setError(err.message)
-        } finally{
-            setPending(false)
+            dispach({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
         }
     }
-    return [onTradeHandler, pending, error]
+    return [onTradeHandler, state.pending, state.error]
+}
+
+
+async function createOfferMessage(type, chatId,  {offeringUser, offeringUserBook, ownerBook}){
+    const messagesRef = collection(db, "chats", chatId, "messages");
+
+    if(type === 'TRADE'){
+        await addDoc(messagesRef, {
+            senderId: offeringUser,
+            text: `Hey, I’d like to trade my "${offeringUserBook.title}" book for your "${ownerBook.title}" book. Waiting to hear from you!`,
+            tradeOfferDetails: {
+                offeredBook: {
+                    id: offeringUserBook.id,
+                    title: offeringUserBook.title,
+                    imageUrl: offeringUserBook.imageUrl
+            },
+                requestedBook: {
+                    id: ownerBook.id,
+                    title: ownerBook.title,
+                    imageUrl: ownerBook.imageUrl
+            }
+            },
+            createdAt: serverTimestamp(),
+            isRead: false
+        });
+
+    } else if(type === 'BUY'){
+        await addDoc(messagesRef, {
+            senderId: offeringUser,
+            text: `Hey, I’d like to ${ownerBook.price > 0 ? 'buy' : 'get'} your "${ownerBook.title}" book. Waiting to hear from you!`,
+            buyOfferDetails: {
+                id: ownerBook.id,
+                title: ownerBook.title,
+                imageUrl: ownerBook.imageUrl
+            },
+            createdAt: serverTimestamp(),
+            isRead: false
+        });
+    }
+
 }
 
 export function useFetchChats(userEmail, chatId){

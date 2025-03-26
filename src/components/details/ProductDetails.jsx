@@ -5,12 +5,17 @@ import { useAuth } from "../../contexts/AuthContext"
 import DetailsButtons from "./DetailsButtons"
 import DeleteModal from "./DeleteModal"
 import { useState } from "react"
+import { useChatRoomCreate } from "../../api/chatApi"
+import ErrorAlert from "../alerts/Error"
+
 
 export default function ProductDetails() {
     const { bookId } = useParams()
-    const [book, pending, error, deleteBookHanlder] = useFetchOne(bookId)
     const { user } = useAuth()
+    const [book, pending, error, deleteBookHanlder] = useFetchOne(bookId)
     const [deleteModalShow, setDelteModalShow] = useState(false)
+
+    const [onBuyHandler, buyuPending, buyError] = useChatRoomCreate(user.email, null, book.ownerEmail, book, 'BUY')
 
     const isOwner = book.owner === user?.uid;
 
@@ -35,6 +40,7 @@ export default function ProductDetails() {
     return (
         <div className="bg-gray-100 dark:bg-gray-800 py-8">
             {pending && <div className="loader m-auto"></div>}
+            <ErrorAlert error={buyError} />
             {deleteModalShow && <DeleteModal closeDelete={closeDelete} onDelete={deleteBookHanlder} />}
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row -mx-4">
@@ -98,7 +104,14 @@ export default function ProductDetails() {
 
                     
 
-                    {user ? <DetailsButtons isOwner={isOwner} bookId={bookId} openDelete={openDelete} />:
+                    {user ? 
+                    <DetailsButtons 
+                        isOwner={isOwner} 
+                        bookId={bookId} 
+                        book={book} 
+                        openDelete={openDelete} 
+                        onBuyHandler={onBuyHandler}
+                        pending={buyuPending}/>:
                     <div className="flex -mx-2 mb-4 mt-6">
                         <div className="w-1/2 px-2">
                             <Link 
