@@ -16,6 +16,11 @@ export default function Product({ book }) {
                 <h2 className="text-gray-500">{book.author}</h2>
             </div>
             <h1 className="px-2 font-bold text-gray-700 text-3xl">${book.price}</h1>
+            {book.price === 0 && (
+            <span className="px-2 py-1 w-20 text-sm font-bold text-white bg-green-500 rounded-md">
+                Donating
+            </span>
+            )}
         </Link>
     );
 }

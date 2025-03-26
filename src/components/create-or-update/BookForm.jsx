@@ -148,6 +148,9 @@ export default function BookForm({
                                         name="price"
                                         defaultValue={book.price}
                                     />
+                                    <p 
+                                        className="text-sm text-end italic text-gray-400"
+                                        >(If a books has a prize of $0 it will have a donation tag!)</p>
                                 </div>
 
                                 <div className="mb-6 text-center">
