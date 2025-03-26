@@ -57,16 +57,6 @@ export default function ProductDetails() {
                         <p className="text-gray-600 text-md mb-4">
                             {book.author}
                         </p>
-                        {/* <div className="flex mb-4">
-                            <div className="mr-4">
-                                <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                                <span className="text-gray-600 text-xl font-bold dark:text-gray-300"> {book.price}$</span>
-                            </div>
-                            <div>
-                                <span className="font-bold text-gray-700 dark:text-gray-300">Genre:</span>
-                                <span className="text-gray-600 dark:text-gray-300 capitalize"> {book.genre}</span>
-                            </div>
-                        </div> */}
 
                         <div className="mb-4 flex items-center gap-2">
                             <div className="inline-flex justify-center items-center gap-2">
@@ -102,13 +92,11 @@ export default function ProductDetails() {
                         </h3>
                     </div>
 
-                    
-
                     {user ? 
                     <DetailsButtons 
                         isOwner={isOwner} 
                         bookId={bookId} 
-                        book={book} 
+                        bookPrice={book.price} 
                         openDelete={openDelete} 
                         onBuyHandler={onBuyHandler}
                         pending={buyuPending}/>:
