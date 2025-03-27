@@ -68,8 +68,8 @@ const reducer = (state, action) => {
             ...state,
             additinal: state.additinal.filter((_, index) => index !== action.data),
         };
-        case "SET_FILE_URL":
-            return { ...state, fileUrl: action.data };
+        case "SET_FILE":
+            return { ...state, imageUrl: action.data };
         case "RESET":
             return initalState;
         default:
@@ -79,7 +79,15 @@ const reducer = (state, action) => {
 export function useCreateEvent(){
     const [state, dispatch] = useReducer(reducer, initalState)
 
-    return[state, dispatch,]
+    const formSubmit = (e) => {
+        e.preventDefault()
+
+        console.log(state);
+        
+
+    }
+
+    return[state, dispatch,formSubmit]
 
     
 }

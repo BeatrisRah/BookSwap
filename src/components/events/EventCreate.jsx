@@ -6,7 +6,7 @@ import { useCreateEvent } from "../../api/eventsApi";
 
 export default function EventCreate() {
     const { user } = useAuth()
-    const [state, dispatch] = useCreateEvent()
+    const [state, dispatch, handleSubmit] = useCreateEvent()
     const [inputValue, setInputValue] = useState('')
     
     const handleDateChange = (e) => {
@@ -22,14 +22,6 @@ export default function EventCreate() {
         const file = e.target.files[0];
         dispatch({ type: "SET_FILE", data: file });
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // const formData = new FormData(e.currentTarget)
-        // console.log(Object.fromEntries([...formData]));
-        console.log(state);
-        
-    }
 
     if (user.uid !== import.meta.env.VITE_ADMIN_ID) {
         return <Navigate to='/404' />
@@ -106,6 +98,7 @@ export default function EventCreate() {
                     cols={30} 
                     rows={10} 
                     className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300" 
+                    placeholder="Event description..."
                     onChange={(e) =>
                         dispatch({ type: "SET_DESCRIPTION", data: e.target.value })
                     } />
