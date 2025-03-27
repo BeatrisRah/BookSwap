@@ -16,6 +16,7 @@ import AuthGuard from './guards/AuthGuard.jsx'
 import GuestGuard from './guards/GuestGuard.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 import UserProfile from './components/profile/UserProfile.jsx'
+import EventSection from './components/events/EventSection.jsx'
 
 export default function App() {    
     return (
@@ -27,6 +28,7 @@ export default function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='/books' element={<ProductList filter={{}} />} />
                 <Route path='/books/:bookId/details' element={<ProductDetails />} />
+                <Route path='/events' element={<EventSection />} />
 
                 <Route element={<GuestGuard />}>
                     <Route path='/register' element={<Register />} />
