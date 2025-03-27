@@ -1,8 +1,11 @@
 import { useEffect, useReducer } from "react";
 import fetchReducer from "../reducers/fetchReducer";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseinit";
+import { checkData } from "../utils/formUtils";
+import { createImageUrl } from "../utils/createImageUrl";
+import { useNavigate } from "react-router";
 
 export function useFetchEvents(){
     const [state, dispach] = useReducer(fetchReducer.reducer, {
@@ -78,16 +81,44 @@ const reducer = (state, action) => {
 }
 export function useCreateEvent(){
     const [state, dispatch] = useReducer(reducer, initalState)
+    const [fetchState, fetchDispactch] = useReducer(fetchReducer.reducer, {
+        pending: false,
+        error:null
+    })
 
-    const formSubmit = (e) => {
+    const navigate = useNavigate()
+
+    const formSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(state);
-        
+        try{
+            checkData(state, ['additinal'])
+            fetchDispactch({type:ACTION_TYPES.FETCH_START})
 
+            const imageUrl = await createImageUrl(state.imageUrl)
+
+            const eventDoc = await addDoc(collection(db, 'events'), {
+                ...state,
+                imageUrl:imageUrl,
+                interested:[],
+            })
+
+            await updateDoc(doc(db, 'events', eventDoc.id), {id: eventDoc.id})
+            fetchDispactch({type:ACTION_TYPES.FETCH_FINAL})
+            dispatch({type:'RESET'})
+            navigate('/events')
+        } catch(err){
+            console.log(err);
+            
+            fetchDispactch({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
+        }
+
+        
+        
+        dispatch({ type: "RESET" });
     }
 
-    return[state, dispatch,formSubmit]
+    return[state, dispatch,formSubmit, fetchState.pending, fetchState.error]
 
     
 }

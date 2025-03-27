@@ -2,11 +2,12 @@ import { Navigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { useCreateEvent } from "../../api/eventsApi";
+import ErrorAlert from "../alerts/Error";
 
 
 export default function EventCreate() {
     const { user } = useAuth()
-    const [state, dispatch, handleSubmit] = useCreateEvent()
+    const [state, dispatch, handleSubmit, pending, error] = useCreateEvent()
     const [inputValue, setInputValue] = useState('')
     
     const handleDateChange = (e) => {
@@ -27,7 +28,9 @@ export default function EventCreate() {
         return <Navigate to='/404' />
     }
     return (
-        <div class="mx-auto w-10/12 mt-10 mb-40 border-2 border-blue-400 rounded-lg">
+        <>
+        {error && <ErrorAlert error={error} />}
+        <div className="mx-auto w-10/12 mt-10 mb-40 border-2 border-blue-400 rounded-lg">
             <div className="mt-10 text-center text-4xl font-bold">Create Event</div>
             <form onSubmit={handleSubmit} className="p-8">
                 <div className="flex gap-4">
@@ -97,7 +100,7 @@ export default function EventCreate() {
                     id="text" 
                     cols={30} 
                     rows={10} 
-                    className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300" 
+                    className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-500" 
                     placeholder="Event description..."
                     onChange={(e) =>
                         dispatch({ type: "SET_DESCRIPTION", data: e.target.value })
@@ -147,11 +150,15 @@ export default function EventCreate() {
                 <div className="text-center mt-10">
                 <button 
                     className="cursor-pointer rounded-lg bg-blue-700 px-8 py-5 text-sm font-semibold text-white"
-                    type="submit">Create Event</button>
+                    type="submit"
+                    disabled={pending}
+                    >
+                        Create Event
+                    </button>
                 </div>
             </form>
         </div>
-
+        </>
 
     );
 }
