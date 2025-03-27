@@ -1,25 +1,20 @@
-export default function EventItem() {
+export default function EventItem({event}) {
     return (
-        <div className="flex flex-col sm:flex-row sm:max-w-2xl max-w-xs overflow-hidden bg-gray-700 rounded-lg shadow-lg dark:bg-gray-800 p-2">
+        <div className="flex flex-col sm:flex-row sm:max-w-2xl max-w-xs overflow-hidden bg-white border-2 border-gray-400 rounded-lg shadow-lg p-2">
             <div className="p-2 sm:w-1/2">
-                <img className="rounded object-cover w-full sm:h-80 h-60" src="https://i.pinimg.com/564x/41/c7/52/41c75274ffa14f3222691c0cbe3c1904.jpg" alt="Article" />
+                <img className="rounded object-cover w-full sm:h-80 h-60" src={event.imageUrl} alt='event' />
             </div>
             <div className="sm:p-4 p-2 sm:w-1/2 flex flex-col justify-between">
                 <div>
-                    <a href="#" className="block sm:mt-2 text-2xl font-semibold text-gray-50 dark:text-white hover:text-gray-600 hover:underline">Lorem
-                        rem facere</a>
-                    <p className="mt-2 text-sm text-gray-200 dark:text-gray-400">Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Tenetur labore, cum rem facere obcaecati beatae sunt numquam architecto delectus dignissimos
-                        explicabo quod pariatur at consequatur sint esse aut Facere. <br /> Numquam architecto delectus dignissimos
+                    <a href="#" className="block sm:mt-2 text-2xl font-semibold text-gray-700 hover:text-gray-600 hover:underline">
+                        {event.title}</a>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        {event.description}
                     </p>
                 </div>
                 <div className="mt-4">
                     <div className="flex items-center">
-                        <div className="flex items-center">
-                            <img className="object-cover h-10 w-10 rounded-full" src="https://i.pinimg.com/564x/1d/1e/16/1d1e16ad5227a9c726b61bd7cc4eca33.jpg" alt="Avatar" />
-                            <a href="#" className="mx-2 font-semibold text-gray-50 dark:text-gray-200">Tocino Code</a>
-                        </div>
-                        <span className="mx-1 text-xs text-gray-400 dark:text-gray-300">21 SEP 2015</span>
+                        <span className="mx-1 text-md text-gray-500">{event.date}</span>
                         <span className="hover:cursor-pointer relative sm:left-12 text-xs text-gray-400 dark:text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx={18} cy={5} r={3} />

@@ -17,6 +17,7 @@ import GuestGuard from './guards/GuestGuard.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 import UserProfile from './components/profile/UserProfile.jsx'
 import EventSection from './components/events/EventSection.jsx'
+import EventCreate from './components/events/EventCreate.jsx'
 
 export default function App() {    
     return (
@@ -44,6 +45,8 @@ export default function App() {
                     <Route path='/books/create' element={<CreateSection />} />
                     <Route path='/books/:bookId/edit' element={<EditProduct />} />
                     <Route path='/books/:bookId/trade' element={<TradeSection />} />
+                    <Route path='/events/create' element={<EventCreate />} />
+
                 </Route>
 
                 <Route path='/*' element={<NotFound />} />
