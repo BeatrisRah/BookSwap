@@ -27,8 +27,11 @@ export default function Navigation() {
                     <div className="md:flex md:items-center md:gap-12">
                         <nav aria-label="Global" className="hidden md:block">
                             <ul className="flex items-center gap-6 text-sm">
-                                <li>
-                                    <Link className="text-gray-500 transition hover:text-gray-500/75" to='/books'> Books </Link>
+                                <li className="hover:bg-gray-100 px-4 py-2 rounded-md hover:shadow-md">
+                                    <Link className="text-gray-500 font-semibold transition hover:text-gray-500/75" to='/books'> Books </Link>
+                                </li>
+                                <li className="hover:bg-gray-100 px-4 py-2 rounded-md hover:shadow-md">
+                                    <Link className="text-gray-500 font-semibold transition hover:text-gray-500/75" to='/events'> Events </Link>
                                 </li>
                                 
                             </ul>
