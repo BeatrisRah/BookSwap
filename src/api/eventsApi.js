@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import fetchReducer from "../reducers/fetchReducer";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
-import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs,  } from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import { checkData } from "../utils/formUtils";
 import { createImageUrl } from "../utils/createImageUrl";
@@ -97,13 +97,13 @@ export function useCreateEvent(){
 
             const imageUrl = await createImageUrl(state.imageUrl)
 
-            const eventDoc = await addDoc(collection(db, 'events'), {
+            await addDoc(collection(db, 'events'), {
                 ...state,
                 imageUrl:imageUrl,
                 interested:[],
+                createdAt: Date.now(),
             })
 
-            await updateDoc(doc(db, 'events', eventDoc.id), {id: eventDoc.id})
             fetchDispactch({type:ACTION_TYPES.FETCH_FINAL})
             dispatch({type:'RESET'})
             navigate('/events')

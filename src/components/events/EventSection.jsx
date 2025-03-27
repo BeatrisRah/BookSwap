@@ -17,8 +17,8 @@ export default function EventSection() {
                 <h1 className="text-center text-4xl font-bold text-blue-400">Book Events</h1>
             </div>
             {pending && <div className="loader m-auto"></div>}
-            <div className="w-5/6 bg-gray-200 m-auto p-5 mb-10">
-                {events.map(ev => <EventItem event={ev} />)}
+            <div className="w-5/6 flex flex-wrap gap-3 justify-center m-auto p-5 mb-10">
+                {events.map(ev => <EventItem key={ev.id} event={ev} />)}
             </div>
             {isAdmin && 
             <div className="flex gap-4 mx-auto justify-center">
