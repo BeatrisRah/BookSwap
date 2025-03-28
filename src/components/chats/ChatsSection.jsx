@@ -23,7 +23,7 @@ export default function ChatsSection() {
     return (
         <div className="flex h-[55rem] w-11/12 m-auto no-scrollbar overflow-hidden shadow-md rounded-md mb-6">
             {/* Sidebar */}
-            <div className="w-1/5 bg-blue-50 border-r border-gray-300">
+            <div className="sm:w-0 lg:w-1/5 bg-blue-50 border-r border-gray-300">
                 {/* Sidebar Header */}
                 <header className="p-4 border-b border-gray-300 flex justify-between items-center bg-blue-500 text-white">
                     <h1 className="text-2xl font-semibold">Chat Web</h1>
@@ -38,11 +38,11 @@ export default function ChatsSection() {
                         to={`/chats/${c.id}`} 
                         className="flex items-center mb-4 hover:bg-blue-100 p-2 rounded-md"
                         key={c.id}>
-                            <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
-                                <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="w-12 h-12 rounded-full" />
+                            <div className="sm:w-10 lg:w-12 sm:h-10 lg:h-12 bg-gray-300 rounded-full mr-3">
+                                <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" className="lg:w-12 lg:h-12 rounded-full" />
                             </div>
-                            <div className="flex-1">
-                                <h2 className="text-lg font-semibold">{c.users?.filter(u => u !== user.email)}</h2>
+                            <div className="flex-1 sm:w-5">
+                                <h2 className="text-sm 3xl:text-lg font-semibold">{c.users?.filter(u => u !== user.email)}</h2>
                             </div>
                         </Link>) : 
                     <div className="flex-1">
