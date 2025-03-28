@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import DropDownMenu from "./DropDownMenu";
+import DropdownMobile from "./DropdowmMobile";
 
 export default function Navigation() {
     const { user } = useAuth();
@@ -12,6 +13,7 @@ export default function Navigation() {
 
     useEffect(() => {
         setIsOpen(false)
+        setHamburgerShow(false)
     }, [location.pathname])
 
     return (
@@ -44,7 +46,7 @@ export default function Navigation() {
                         </button>
                     </div>
 
-                    {hamburgerShow && <DropDownMenu mobile={true} />}
+                    {hamburgerShow && <DropdownMobile user={user}/>}
 
 
                     <div className="hidden md:flex md:items-center md:gap-12">
