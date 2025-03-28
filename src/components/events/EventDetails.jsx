@@ -49,7 +49,7 @@ export default function EventsDetails() {
                         'bg-rose-400 hover:bg-rose-500'
                     }`}>
                         <button className="text-white w-full" onClick={joinEventHandler} disabled={isInterested || pending} >
-                            {isInterested ? "Interested" : "I'm Interested"}
+                            {isInterested ? "Already Interested" : "I'm Interested"}
                         </button>
                     </div>}
 

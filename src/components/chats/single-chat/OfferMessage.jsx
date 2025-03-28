@@ -1,6 +1,24 @@
 import { Link } from "react-router"
 
-export default function TradeOfferMessage({ message, isIncoming }) {
+export default function OfferMessage({ message, isIncoming }) {
+
+    if(message.buyOfferDetails){
+        return (
+            <div className={`flex flex-wrap w-2/6 rounded-lg p-3 gap-3 ${
+                isIncoming ? 
+                'bg-white text-gray-900' :
+                'bg-blue-500 text-white'
+            }`}>
+                <p className="text-lg px-2">{message.text}</p>
+                <Link className="mx-auto" to={`/books/${message.buyOfferDetails.id}/details`}>
+                    <img src={message.buyOfferDetails.imageUrl} className="w-70 mb-4 rounded-md shadow-md" />
+                    <h3 className="text-center text-lg">{message.buyOfferDetails.title}</h3>
+                </Link>
+            </div>
+        )
+    }
+
+
     return (
         <div className={`flex flex-wrap w-2/5 rounded-lg p-3 gap-3 ${
             isIncoming ? 
