@@ -8,7 +8,6 @@ export default function Register() {
     const handleRegister = useAuthForm(setError)
     const [state, formAction, pending] = useActionState(handleRegister, {email:'', password:'', rePass:''})
     
-
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col  py-10 sm:px-6 lg:px-8">
             {error && <ErrorAlert error={error} />}

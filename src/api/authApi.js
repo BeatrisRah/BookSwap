@@ -5,6 +5,7 @@ export function useAuthForm(seterror){
     const {login, sighUp} = useAuth()
     
     const authFormHandler = async (previusState, formData) => {
+        
         const userData = Object.fromEntries(formData.entries())
         try{
             seterror(null)
@@ -21,7 +22,7 @@ export function useAuthForm(seterror){
             seterror(err.message)
         }
 
-        // return userData;
+        return userData;
     }
 
     return authFormHandler;
