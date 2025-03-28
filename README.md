@@ -2,17 +2,19 @@
 
 BookSwap is a platform where users can trade, sell, or donate books with others in their community. It allows users to list books, browse available books, interact with other users, and arrange book exchanges or purchases. **This app was created as a SoftUni project in course ReactJS-feb.**
 
+
 ## Installation
 
-1. Clone the repository:
+**1. Clone the repository:**
 
-
+-> Create a new folder
+-> Open Terminal and type:
 ```bash
-  git clone https://github.com/BeatrisRah/BookSwap.git
+  git clone https://github.com/BeatrisRah/BookSwap.git .
 ```
 
 
-2. Install dependencies:
+**2. Install dependencies:**
 
 
 ```bash
@@ -20,14 +22,14 @@ BookSwap is a platform where users can trade, sell, or donate books with others 
 ```
 
 
-3. Run the development server:
+**3. Run the development server:**
 
 
 ```bash
   npm run dev
 ```
 
-The app will run on http://localhost:5173/ (or another port if configured).
+The app will run on http://localhost:5173 (or another port if configured).
 
 
 
@@ -53,6 +55,11 @@ The app will run on http://localhost:5173/ (or another port if configured).
 
 * Connect & Exchange – Chat securely with buyers, traders, or donors.
 
-* Join Events – Participate in book bazaars and community discussions.
 
 🙌 Happy reading, trading, and sharing!
+## 🖥️ Tech Stack
+
+**Client:** React, TailwindCSS
+
+**Server:** Firebase
+
