@@ -1,11 +1,12 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import fetchReducer from "../reducers/fetchReducer";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
-import { addDoc, collection, doc, getDoc, getDocs,  } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, updateDoc,  } from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import { checkData } from "../utils/formUtils";
 import { createImageUrl } from "../utils/createImageUrl";
 import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 export function useFetchEvents(){
     const [state, dispach] = useReducer(fetchReducer.reducer, {
@@ -124,7 +125,9 @@ export function useCreateEvent(){
 }
 
 export function useFecthOneEvent(eventID){
+    const {user} = useAuth()
     const [state, dispach] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
+    const [localInterested, setLocalInterested] = useState([]);
 
     useEffect(() => {
         let isCancelled = false
@@ -138,6 +141,7 @@ export function useFecthOneEvent(eventID){
     
                 if (!eventDoc.exists()) throw new Error('Event doesnt exist!');
                 dispach({type:ACTION_TYPES.FETCH_SUCCESS, data:{...eventDoc.data(), id:eventDoc.id}})
+                setLocalInterested(eventDoc.data().interested || [])
 
             } catch(err){
                 dispach({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
@@ -152,5 +156,24 @@ export function useFecthOneEvent(eventID){
         return () => isCancelled = true
     }, [eventID])
 
-    return [state.pending, state.data, state.error]
+    const joinEventHandler = async () => {
+        try{
+            const eventRef = doc(db, 'events', eventID)
+            dispach({type:ACTION_TYPES.FETCH_START})
+
+            await updateDoc(eventRef, {
+                interested: arrayUnion(user.email)
+            });
+            dispach({type:ACTION_TYPES.FETCH_FINAL})
+            setLocalInterested(l => [...l, user.email])
+
+        } catch(err){
+            dispach({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
+            setLocalInterested(l => l.filter(email => !email !== user.email))
+        }
+    }
+
+    const isInterested = useMemo(() => localInterested.includes(user?.email), [localInterested, user?.email])
+
+    return [state.pending, state.data, state.error, joinEventHandler, isInterested]
 }

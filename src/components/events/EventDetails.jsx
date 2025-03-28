@@ -6,14 +6,12 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function EventsDetails() {
     const { eventId } = useParams()
     const { user } = useAuth()
-    const [pending, event, error] = useFecthOneEvent(eventId)
-
-    const interested = event.interested?.includes(user?.email)
+    const [pending, event, error, joinEventHandler, isInterested] = useFecthOneEvent(eventId)
 
     if(error) {
         <Navigate to='/events' />
     }
-    
+
 
     return (
         <div className="w-full bg-[url(/Event_details_bg.png)] h-screen bg-cover bg-top">
@@ -44,12 +42,18 @@ export default function EventsDetails() {
                         ))}
                     </ul>
 
-                    {!interested && user &&  
-                    <div className="bg-rose-400 rounded-md mx-auto p-2 w-1/3 hover:bg-rose-500">
-                        <button className="text-white w-full" >
-                            I'm Interested!
+                    {user &&  
+                    <div className={`rounded-md mx-auto p-2 w-1/3 ${
+                        isInterested ?
+                        'bg-rose-200 hover:bg-rose-300':
+                        'bg-rose-400 hover:bg-rose-500'
+                    }`}>
+                        <button className="text-white w-full" onClick={joinEventHandler} disabled={isInterested || pending} >
+                            {isInterested ? "Interested" : "I'm Interested"}
                         </button>
                     </div>}
+
+                    
 
                 </div>
 
