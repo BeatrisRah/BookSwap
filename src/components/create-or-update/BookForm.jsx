@@ -41,12 +41,6 @@ export default function BookForm({
                                         </div>
                                     ) : (
                                         <div>
-                                            <span className="mb-2 block text-xl font-semibold text-black">
-                                                Drop image here
-                                            </span>
-                                            <span className="mb-2 block text-base font-medium text-[#6B7280]">
-                                                Or
-                                            </span>
                                             <span
                                                 className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-black hover:bg-gray-500  hover:text-white">
                                                 Browse

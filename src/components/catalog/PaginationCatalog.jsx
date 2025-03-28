@@ -13,7 +13,7 @@ export default function PaginationCatalog({pages, currentPage, handleFilterChang
 
                 {Array.from({length:pages}).map((el, i) => 
                     <button 
-                        className={`rounded-lg border border-blue-500 px-4 py-2 
+                        className={`rounded-lg border border-gary-200 px-4 py-2 
                             ${i + 1 === currentPage ? 
                                 "!bg-[#2c9bb0] text-white":
                                 "text-gray-700"
