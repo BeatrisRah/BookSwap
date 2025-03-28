@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import fetchReducer from "../reducers/fetchReducer";
 import { ACTION_TYPES } from "../reducers/postActionTypes";
-import { addDoc, collection, getDocs,  } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs,  } from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import { checkData } from "../utils/formUtils";
 import { createImageUrl } from "../utils/createImageUrl";
@@ -121,4 +121,36 @@ export function useCreateEvent(){
     return[state, dispatch,formSubmit, fetchState.pending, fetchState.error]
 
     
+}
+
+export function useFecthOneEvent(eventID){
+    const [state, dispach] = useReducer(fetchReducer.reducer, fetchReducer.INITAL_FETCH_STATE)
+
+    useEffect(() => {
+        let isCancelled = false
+
+        const getData = async () => {
+            const eventRef = doc(db, 'events', eventID)
+            dispach({type:ACTION_TYPES.FETCH_START})
+
+            try{
+                const eventDoc = await getDoc(eventRef)
+    
+                if (!eventDoc.exists()) throw new Error('Event doesnt exist!');
+                dispach({type:ACTION_TYPES.FETCH_SUCCESS, data:{...eventDoc.data(), id:eventDoc.id}})
+
+            } catch(err){
+                dispach({type:ACTION_TYPES.FETCH_ERROR, error:err.message})
+            }
+
+        }
+
+        if(!eventID) return
+
+        if(!isCancelled) getData()
+
+        return () => isCancelled = true
+    }, [eventID])
+
+    return [state.pending, state.data, state.error]
 }

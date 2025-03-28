@@ -18,6 +18,7 @@ import NotFound from './components/not-found/NotFound.jsx'
 import UserProfile from './components/profile/UserProfile.jsx'
 import EventSection from './components/events/EventSection.jsx'
 import EventCreate from './components/events/EventCreate.jsx'
+import EventsDetails from './components/events/EventDetails.jsx'
 
 export default function App() {    
     return (
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path='/books' element={<ProductList filter={{}} />} />
                 <Route path='/books/:bookId/details' element={<ProductDetails />} />
                 <Route path='/events' element={<EventSection />} />
+                <Route path='/events/:eventId' element={<EventsDetails />} />
 
                 <Route element={<GuestGuard />}>
                     <Route path='/register' element={<Register />} />
