@@ -162,7 +162,7 @@ export function useFetchOne(bookId){
 
                     if (!bookSnap.exists()) throw new Error('Book doesnt exist!');
 
-                    dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:bookSnap.data()})
+                    dispatch({type:ACTION_TYPES.FETCH_SUCCESS, data:{...bookSnap.data(), id:bookSnap.id}})
                 }
                 
             } catch(err){
