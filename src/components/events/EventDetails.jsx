@@ -1,10 +1,14 @@
 import { Navigate, useParams } from "react-router";
 import { useFecthOneEvent } from "../../api/eventsApi";
 import Spinner from "../Spinner";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function EventsDetails() {
     const { eventId } = useParams()
+    const { user } = useAuth()
     const [pending, event, error] = useFecthOneEvent(eventId)
+
+    const interested = event.interested?.includes(user?.email)
 
     if(error) {
         <Navigate to='/events' />
@@ -40,11 +44,12 @@ export default function EventsDetails() {
                         ))}
                     </ul>
 
+                    {!interested && user &&  
                     <div className="bg-rose-400 rounded-md mx-auto p-2 w-1/3 hover:bg-rose-500">
-                        <button className="text-white w-full" >I'm Interested!
+                        <button className="text-white w-full" >
+                            I'm Interested!
                         </button>
-
-                    </div>
+                    </div>}
 
                 </div>
 
