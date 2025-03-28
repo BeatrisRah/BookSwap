@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import ProductList from "../catalog/ProductsSection";
 import HeroCarousel from "./HeroCarosel";
+import ProductsSection from "../catalog/ProductsSection";
 
 function Hero() {
 	return (
@@ -130,7 +130,7 @@ function Hero() {
 				<span className="flex-1 border-t border-gray-400"></span>
 			</h2>
 
-			<ProductList filter={{ latest: true }} />
+			<ProductsSection filter={{ latest: true }} />
 
 		</>
 	);

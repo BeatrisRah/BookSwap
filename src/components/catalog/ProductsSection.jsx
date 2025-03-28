@@ -1,7 +1,8 @@
 import { memo, useEffect, useState } from "react";
 import Product from "./catalog-product/Product";
-import {  useSearchParams } from "react-router";
 import { useFetch } from "../../api/booksApi";
+import {  useSearchParams } from "react-router";
+
 import Sidebar from "./SideBar";
 import PaginationCatalog from "./PaginationCatalog";
 
