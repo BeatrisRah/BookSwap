@@ -29,8 +29,10 @@ BookSwap is a platform where users can trade, sell, or donate books with others 
   npm run dev
 ```
 
-The app will run on http://localhost:5173 (or another port if configured).
-
+The app will run on http://localhost:5173 (or another port if configured).<br>
+### Example user: <br>
+Email: alex@email.com <br>
+Pass: softuni123
 
 
 ## 🚀 Features
