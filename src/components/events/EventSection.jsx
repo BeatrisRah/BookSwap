@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useFetchEvents } from "../../api/eventsApi";
 import { useAuth } from "../../contexts/AuthContext";
-import EventItem from "./Event";
+import EventItem from "./EventItem/Event";
 
 export default function EventSection() {
     const {user} = useAuth()
