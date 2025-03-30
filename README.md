@@ -31,7 +31,7 @@ BookSwap is a platform where users can trade, sell, or donate books with others 
 
 The app will run on http://localhost:5173 (or another port if configured).<br>
 
-#### Or simply open this [link](bookswap-f06b7.web.app)!
+#### Or simply open this [link](https://bookswap-f06b7.web.app/)!
 
 ### Example user: <br>
 Email: alex@email.com <br>
