@@ -5,11 +5,9 @@ import EventItem from "./Event";
 import { MemoryRouter } from "react-router";
 
 
-it('Should display event information', () => {
+it('Should display event title', () => {
     const mockDAta = {
         title:'testing',
-        date:'1/1/1',
-        location:'Sofia'
     }
     render(
     <MemoryRouter>
