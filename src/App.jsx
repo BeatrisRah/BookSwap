@@ -17,8 +17,8 @@ import GuestGuard from './guards/GuestGuard.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 import UserProfile from './components/profile/UserProfile.jsx'
 import EventSection from './components/events/EventSection.jsx'
-import EventCreate from './components/events/EventCreate.jsx'
 import EventsDetails from './components/events/EventDetails.jsx'
+import EventCreate from './components/events/EventCreate/EventCreate.jsx'
 
 export default function App() {    
     return (

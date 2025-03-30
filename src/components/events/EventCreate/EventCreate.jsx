@@ -1,8 +1,8 @@
 import { Navigate } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useState } from "react";
-import { useCreateEvent } from "../../api/eventsApi";
-import ErrorAlert from "../alerts/Error";
+import { useCreateEvent } from "../../../api/eventsApi";
+import ErrorAlert from "../../alerts/Error";
 
 
 export default function EventCreate() {
