@@ -33,38 +33,53 @@ The app will run on http://localhost:5173 (or another port if configured).<br>
 
 #### Or simply open this [link](https://bookswap-f06b7.web.app/)!
 
-### Example user: <br>
+### 🔒 Example user: <br>
 Email: alex@email.com <br>
 Pass: softuni123
 
 
 ## 🚀 Features
 
-- 📖 Buy & Sell Books – List your books for sale or find affordable second-hand books.
+- 👨🏻‍💻 User Authentication – Sign up, log in, and log out securely with Firebase Authentication.
 
-- 🔄 Trade Books – Swap books with fellow readers and refresh your collection.
+- 📖 Book Listings – Users can add, edit, and delete their own books.
 
-- 🎁 Donate Books – Give books a second life by donating.
+- 🔄 Trade System – Users can offer trades by selecting a book from their listings.
 
-- 📲 Chats - Decide how trades and sells will go best to your needs.
+- 📲 Real-Time Chat – Built-in messaging system for trade negotiations.
 
-- 📅 Book Bazaar Events – Join seasonal book fairs, swaps, and community gatherings.
+- 📅 Admin Events – Only admins can create/edit events, while all users can view them.
 
 ## 📌 Usage Guide
 
-* Sign Up / Log In – Create an account to start listing or finding books.
+📝 Adding a Book
+1. Go to the "Add Book" page.
 
-* Browse or Search – Explore books by title, genre, or new additions.
+2. Fill in the book details.
 
-* List a Book – Upload book details and set selling, trading, or donation options.
+3. Upload a cover image.
 
-* Connect & Exchange – Chat securely with buyers, traders, or donors.
+4. Click Create – your book is now listed!
+
+🔄 Trading a Book
+1. Click on a book you want to trade for.
+
+2. Select one of your listed books as a trade offer.
+
+3. A chat will automatically open with the owner.
 
 
 🙌 Happy reading, trading, and sharing!
 ## 🖥️ Tech Stack
 
-**Client:** React, TailwindCSS
 
-**Server:** Firebase
+**Frontend:** React, React Router, Context API
+
+**Backend:** Firebase Firestore (NoSQL Database)
+
+**Authentication:** Firebase Auth
+
+**Image Uploads:** Cloudinary
+
+**Real-Time Features:** Firestore Listeners for live chat
 
