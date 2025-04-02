@@ -4,5 +4,6 @@ export function checkData(formData, optional = []){
 
 
         if(formData[key] === '') throw new Error('Please fill all inputs!')
+        if(key === 'price' && Number(formData[key]) < 0) throw new Error('Please fill a correct price!')
     }
 }
